@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#"><head><meta name="generator" content="Hexo 3.8.0"><meta name="author" content="Connor Leech"><title>Use Resource Controller, Artisan and Tinker to set up REST API in Laravel 5.3</title><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="cleartype" content="on"><meta name="MobileOptimized" content="320"><meta name="HandheldFriendly" content="True"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="description" content="Set up a Database Model and Resource Controller to build REST API using Laravel 5 MVC pattern #allTheLingo"><meta name="keywords" content="laravel, aws, javascript, php, developer, software engineer, web development, software, node.js, serverless, lambda, san francisco, bay area, east bay, vue, vuejs, vue.js, vue 2, laravel 5, amazon web services"><meta name="zipcode" content="94501"><meta name="city" content="Alameda"><meta name="state" content="California"><meta name="country" content="United States"><meta name="language" content="EN"><meta property="og:site_name" content="Connor Leech Blog | Javascript and Laravel tutorials"><meta property="og:description" content="Get notified about the latest trends in web development, career growth and cloud infrastructure. I send emails about twice a month covering tutorials in Javascript, Laravel and Cloud"><meta property="og:image" content="http://i0.kym-cdn.com/photos/images/original/001/018/899/936.jpg"><meta property="og:title" content="Use Resource Controller, Artisan and Tinker to set up REST API in Laravel 5.3"><meta property="og:description" content="Set up a Database Model and Resource Controller to build REST API using Laravel 5 MVC pattern #allTheLingo"><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70809574-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-70809574-1');
+</script><!-- Favicon--><link rel="shortcut icon" type="image/png" href="/images/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><!-- Vendor Fonts--><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type="text/css"><link href="/bower_components/animate.css/animate.min.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Yantramanav" rel="stylesheet"><!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries--><!-- WARNING: Respond.js doesn't work if you view the page via file://--><!--if lt IE 9script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+--><link rel="alternate" href="/atom.xml" title="config.title" type="application/rss2.xml"><link rel="stylesheet" href="/css/main.css"></head><body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" class="post"><!-- Nav--><nav role="navigation" class="navbar navbar-custom navbar-fixed-top"><div class="container"><div class="navbar-header"><a href="https://employbl.com/" target="_blank" class="navbar-brand"><img src="/images/employbl_logo.svg" style="height:100px; width:100px;"></a><button type="button" data-toggle="collapse" data-target=".navbar-main-collapse" class="navbar-toggle"><i class="fa fa-bars"></i></button></div><div class="collapse navbar-collapse navbar-left navbar-main-collapse"></div><div class="collapse navbar-collapse navbar-right navbar-main-collapse"><ul class="nav navbar-nav"><li><a href="/blog" class="page-scroll">Blog 🔨</a></li><li><a href="/#about" class="page-scroll">Projects ⚡</a></li></ul></div></div></nav><main id="content"><div id="archive" class="container"><div class="row"> <div class="col-sm-2 col-md-2"><h3>Categories</h3><a href="/blog"><p>All</p></a><a href="/categories/Career"><p>Career</p></a><a href="/categories/Programming"><p>Programming</p></a><a href="/categories/Javascript"><p>Javascript</p></a><a href="/categories/Laravel"><p>Laravel</p></a><a href="/categories/Cloud"><p>Cloud</p></a><a href="/categories/PHP"><p>PHP</p></a></div><div class="col-xs-12 col-md-8"><article class="post"><div class="row"><div class="col-md-10 col-md-offset-1"><h1 class="post-title">Use Resource Controller, Artisan and Tinker to set up REST API in Laravel 5.3</h1></div></div><div class="row"><div class="post-meta"><h5><span>Connor Leech</span><span class="date"> - Jan 2, 2017&ensp;in<span class="post-categories">&ensp;<a href="/categories/Laravel/" class="post-category">Laravel</a></span></span></h5><a target="_blank" href="http://twitter.com/intent/tweet?status=Use Resource Controller, Artisan and Tinker to set up REST API in Laravel 5.3 by @Connor11528+http://connorleech.info/blog/Use-Resource-Controller-Artisan-and-Tinker-to-set-up-REST-API-in-Laravel-5/" class="btn btn-primary social-share twitter"><i class="fa fa-twitter fa-2x"><span class="hidden-xs"></span></i></a><a target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://connorleech.info/blog/Use-Resource-Controller-Artisan-and-Tinker-to-set-up-REST-API-in-Laravel-5/&amp;title=Use Resource Controller, Artisan and Tinker to set up REST API in Laravel 5.3&amp;source=connorleech.info" class="btn btn-primary social-share linkedin"><i class="fa fa-linkedin fa-2x"><span class="hidden-xs"></span></i></a></div></div><div class="post-body"><p><img src="https://cdn-images-1.medium.com/max/800/1*L0jIQxoV1eNcNSlAj-faHA.png" alt=""></p>
+<p><img src="https://cdn-images-1.medium.com/max/600/1*u0lPW7MZEFFoUS4EIX9qag.png" alt=""></p>
+<p>In the <a href="https://medium.com/@connorleech/build-google-maps-typeahead-functionality-with-vue-js-and-laravel-5-3-b75986c77df1#.7jcaht2sd" target="_blank" rel="noopener">last
+post</a>
+we built the client side of our application with Vue.js and Google Maps API.</p>
+<p><a href="https://medium.com/@connorleech/generate-authentication-for-a-laravel-5-3-web-app-384781a5529f#.lt3wnh1tr" target="_blank" rel="noopener">Before
+that</a>,
+we generated our application and added authentication using Laravel 5.3.</p>
+<p><strong>In this post</strong> we will handle generating a model and controller for our
+application. This will set up a database table and handle RESTful routing. To
+save boilerplate code we’ll utilize Laravel’s <a href="https://laravel.com/docs/5.3/controllers#resource-controllers" target="_blank" rel="noopener">Resource
+Controller</a>.
+Lastly we’ll test that it works by adding data to our database and querying it
+using <a href="https://laravel.com/docs/5.3/eloquent" target="_blank" rel="noopener">Eloquent</a> and the php artisan
+tinker command.</p>
+<blockquote>
+<p><strong>The source code for this application is available here:
+</strong><a href="https://github.com/connor11528/laravel-5.3-app" target="_blank" rel="noopener">https://github.com/connor11528/laravel-5.3-app</a></p>
+</blockquote>
+<h3 id="Generate-the-Model"><a href="#Generate-the-Model" class="headerlink" title="Generate the Model"></a>Generate the Model</h3><p>For this one our model is going to be called Candidates with a name, email,
+phone, lat, long, street, city, state and zip. We head to the command line and
+run:</p>
+<pre><code>$ php artisan make:model Candidate
+$ php artisan make:migration create_candidates_table
+</code></pre><p>Then in the <strong>database/migrations </strong>we will find a create_candidates_table file
+with a number before it. (The number is the timestamp in order to avoid
+conflicting migrations.) In that file we add to up and down methods. The up
+method is for creating the SQL columns in our database and the down is for
+removing the table during migration rollbacks.</p>
+<pre><code>&lt;?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateCandidatesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * 
+ void
+     */
+    public function up()
+    {
+        Schema::create(&apos;candidates&apos;, function (Blueprint $table) {
+            $table-&gt;increments(&apos;id&apos;);
+            $table-&gt;string(&apos;name&apos;);
+            $table-&gt;string(&apos;email&apos;);
+            $table-&gt;string(&apos;phone&apos;, 30)-&gt;nullable();
+            $table-&gt;float(&apos;latitude&apos;, 10, 6);
+            $table-&gt;float(&apos;longitude&apos;, 10, 6);
+            $table-&gt;string(&apos;street&apos;);
+            $table-&gt;string(&apos;city&apos;, 50);
+            $table-&gt;string(&apos;state&apos;, 2);
+            $table-&gt;string(&apos;zip&apos;, 12);
+            $table-&gt;timestamps();
+        });
+    }
+
+/**
+     * Reverse the migrations.
+     *
+     * 
+ void
+     */
+    public function down()
+    {
+        Schema::drop(&apos;candidates&apos;);
+    }
+}
+</code></pre><p>We can then re-create the SQL table:</p>
+<pre><code>$ php artisan migrate:rollback
+</code></pre><p>If you get an error “no such table candidates”, then comment out the
+schema::drop line and rollback. The rollback is for dropping the table but it
+cannot be dropped if the table does not exist yet. Rollback runs the down and
+then the up methods. It also deletes data in our database so do not use it in
+production environment! Instead if changing the database structure or adding
+tables create a new migrate file and run $ <em>php artisan migrate</em>.</p>
+<h3 id="Generate-the-Controller"><a href="#Generate-the-Controller" class="headerlink" title="Generate the Controller"></a>Generate the Controller</h3><p>We are going to generate a <a href="https://laravel.com/docs/5.3/controllers#resource-controllers" target="_blank" rel="noopener">Resource
+Controller</a> so
+that all of our CRUD options work automatically. This adds GET, POST, PUT and
+DELETE requests for our model as expected in a Restful API. It saves us a lot of
+work! Thanks Laravel.</p>
+<pre><code>$ php artisan make:controller CandidateController --resource
+</code></pre><p><img src="https://cdn-images-1.medium.com/max/800/1*OWWt18PDcDrWtBJUqGZHZw.png" alt=""></p>
+<p>To register the routes for the controller we head into <strong>routes/web.php </strong>(this
+is a new file structure in the 5.3 release) and add:</p>
+<pre><code>Route::resource(&apos;candidates&apos;, &apos;CandidateController&apos;);
+</code></pre><p>This generates a whole lot of routes for our controllers. This is from the docs:</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*s2f8mNxcRtOR1ON4dgkI7Q.png" alt=""></p>
+<p><span class="figcaption_hack">Laravel 5.3 Resource Controller documentation</span></p>
+<p>Substitute ‘candidates’ for ‘photos’ and that’s what we have. You can also view
+all routes in the application using $ <em>php artisan route:list.</em></p>
+<h3 id="Generate-a-database-record-with-Tinker"><a href="#Generate-a-database-record-with-Tinker" class="headerlink" title="Generate a database record with Tinker"></a>Generate a database record with Tinker</h3><p><img src="https://cdn-images-1.medium.com/max/800/1*oBTLG6PHVQkmTr2asq4HNA.png" alt=""></p>
+<p><span class="figcaption_hack">We can use tinker and Eloquent commands to speak directly with our SQL database.</span></p>
+<p>The artisan tinker command allows us to write SQL direct to our database. We are
+going to use it in order to generate our first Candidate.</p>
+<pre><code>$ php artisan tinker
+&gt;&gt;&gt;&gt;  $candidate = new App\Candidate;
+      $candidate-&gt;name = &apos;John Doe&apos;;
+      $candidate-&gt;email = &apos;
+&apos;;
+      $candidate-&gt;latitude = 37.809799;
+      $candidate-&gt;longitude = -122.295232;
+      $candidate-&gt;city = &apos;Oakland&apos;;
+      $candidate-&gt;state = &apos;CA&apos;;
+      $candidate-&gt;zip = &apos;94607&apos;;
+&gt;&gt;&gt; $candidate
+=&gt; App\Candidate {#691
+name: &quot;John Doe&quot;,
+email: &quot;dummyemail@gmail.com&quot;,
+latitude: 37.809799,
+longitude: -122.295232,
+city: &quot;Oakland&quot;,
+state: &quot;CA&quot;,
+zip: &quot;94607&quot;,
+}
+&gt;&gt;&gt; $candidate-&gt;save();
+=&gt; true
+</code></pre><p>This will add one Candidate named John Doe to our database.</p>
+<p>Now to view this candidate in the browser add an index method to
+<strong>app/Http/Controllers/CandidateController.php</strong>:</p>
+<pre><code>class CandidateController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * 
+ \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $candidates = Candidate::all();
+
+        return $candidates;
+    }
+</code></pre><p>To test our REST API you can head to <a href="http://localhost:8000/candidates" target="_blank" rel="noopener">http://localhost:8000/candidates</a> and view
+the JSON! Laravel automatically serializes the table data into JSON form.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*9juMI-_1EFsUZijQeTJVzg.png" alt=""></p>
+<p><span class="figcaption_hack">Our candidate in the database.</span></p>
+<p>Thank you for reading! If you enjoyed this article give it a favorite. Thanks
+again.</p>
+<p><strong>Source code:</strong> <a href="https://github.com/connor11528/laravel-5.3-app" target="_blank" rel="noopener">https://github.com/connor11528/laravel-5.3-app</a><br>
+<strong>Twitter:</strong> <a href="https://twitter.com/Connor11528" target="_blank" rel="noopener">https://twitter.com/Connor11528</a></p>
+<hr>
+
+<h4 id="Related-Articles-from-the-Good-People™-at-Scotch-io"><a href="#Related-Articles-from-the-Good-People™-at-Scotch-io" class="headerlink" title="Related Articles from the Good People™ at Scotch.io"></a>Related Articles from the Good People™ at Scotch.io</h4><ul>
+<li><a href="https://scotch.io/tutorials/simple-laravel-crud-with-resource-controllers" target="_blank" rel="noopener">Simple Laravel CRUD with Resource Controllers</a></li>
+<li><a href="https://scotch.io/tutorials/tinker-with-the-data-in-your-laravel-apps-with-php-artisan-tinker" target="_blank" rel="noopener">Tinker with the Data in Your Laravel Apps with PHP Artisan Tinker</a></li>
+</ul>
+</div><div id="disqus_thread"></div></article><nav class="pagination"><a href="/blog/Laravel-5.3 Form-Helpers-and-CRUD-Controller-Methods/" title="Laravel 5.3 Form Helpers and CRUD Controller Methods" class="btn-default entry-pagination__link entry-pagination__link--prev">Prev</a><a href="/blog/Build-Google-Maps-Typeahead-Functionality-with-Vuejs-and-Laravel-5/" title="Build Google Maps Typeahead Functionality with Vue.js and Laravel 5.3" class="btn-default entry-pagination__link entry-pagination__link--next">Next</a></nav></div></div></div></main><footer class="footer"><div class="container"><div class="row"><div class="col-sm-6"><h4>Connor's Dev Newsletter</h4><p>Very occassional updates. You're free to sign up.</p><ul><li><form action="//herokuapp.us14.list-manage.com/subscribe/post?u=42dd73a709fbadb4a29ef1d0d&amp;amp;id=b77fdad58d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate="" class="validate"><div class="input-group"><input type="email" value="" name="EMAIL" id="mce-EMAIL" placeholder="Enter your email here" class="required email form-control input-lg"><div id="mce-error-response" style="display:none" class="response"></div><div id="mce-success-response" style="display:none" class="response"></div><div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_42dd73a709fbadb4a29ef1d0d_b77fdad58d" tabindex="-1" value=""></div><span class="input-group-btn"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary btn-lg"></span></div></form></li></ul></div><div class="col-sm-2 col-sm-offset-1"><h4>Connect</h4><ul><li> <a target="_blank" href="https://github.com/connor11528">GitHub</a></li><li> <a target="_blank" href="https://www.linkedin.com/in/connorleech">LinkedIn</a></li><li> <a target="_blank" href="https://twitter.com/connor11528">Twitter</a></li><li><a target="_blank" href="https://medium.com/@connorleech">Medium</a></li><li><a target="_blank" href="https://stackoverflow.com/users/2031033/connor-leech">Stackoverflow</a></li><li><a target="_blank" href="https://plus.google.com/u/0/+ConnorLeech">Google+</a></li></ul></div><div class="col-sm-3"><h4>Email</h4><ul><li> <a href="mailto:connorleech@gmail.com">connorleech@gmail.com</a></li></ul></div></div></div></footer><!-- vendor--><script src="/bower_components/jquery/dist/jquery.min.js"></script><script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script><script src="/bower_components/wow/dist/wow.min.js"></script><script src="/bower_components/jquery-easing/jquery.easing.min.js"></script><script src="/bower_components/jquery-color/jquery.color.js"></script><script src="/bower_components/scrollmagic/scrollmagic/minified/ScrollMagic.min.js"></script><script src="/bower_components/scrollmagic/scrollmagic/minified/plugins/debug.addIndicators.min.js"></script><script src="/bower_components/vivus/dist/vivus.min.js"></script><!-- require modules--><script src="/js/require.js"></script><script src="/js/app.js"></script><!-- analytics--><!-- disqus--><script>(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://connorleech.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></body></html>

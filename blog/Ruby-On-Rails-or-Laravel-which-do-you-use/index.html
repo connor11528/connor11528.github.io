@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#"><head><meta name="generator" content="Hexo 3.8.0"><meta name="author" content="Connor Leech"><title>Ruby On Rails or Laravel, which do you use?</title><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="cleartype" content="on"><meta name="MobileOptimized" content="320"><meta name="HandheldFriendly" content="True"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="description" content="High level blog post comparing the merits of Laravel with Ruby On Rails"><meta name="keywords" content="laravel, aws, javascript, php, developer, software engineer, web development, software, node.js, serverless, lambda, san francisco, bay area, east bay, vue, vuejs, vue.js, vue 2, laravel 5, amazon web services"><meta name="zipcode" content="94501"><meta name="city" content="Alameda"><meta name="state" content="California"><meta name="country" content="United States"><meta name="language" content="EN"><meta property="og:site_name" content="Connor Leech Blog | Javascript and Laravel tutorials"><meta property="og:description" content="Get notified about the latest trends in web development, career growth and cloud infrastructure. I send emails about twice a month covering tutorials in Javascript, Laravel and Cloud"><meta property="og:image" content="http://i0.kym-cdn.com/photos/images/original/001/018/899/936.jpg"><meta property="og:title" content="Ruby On Rails or Laravel, which do you use?"><meta property="og:description" content="High level blog post comparing the merits of Laravel with Ruby On Rails"><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70809574-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-70809574-1');
+</script><!-- Favicon--><link rel="shortcut icon" type="image/png" href="/images/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><!-- Vendor Fonts--><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type="text/css"><link href="/bower_components/animate.css/animate.min.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Yantramanav" rel="stylesheet"><!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries--><!-- WARNING: Respond.js doesn't work if you view the page via file://--><!--if lt IE 9script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+--><link rel="alternate" href="/atom.xml" title="config.title" type="application/rss2.xml"><link rel="stylesheet" href="/css/main.css"></head><body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" class="post"><!-- Nav--><nav role="navigation" class="navbar navbar-custom navbar-fixed-top"><div class="container"><div class="navbar-header"><a href="https://employbl.com/" target="_blank" class="navbar-brand"><img src="/images/employbl_logo.svg" style="height:100px; width:100px;"></a><button type="button" data-toggle="collapse" data-target=".navbar-main-collapse" class="navbar-toggle"><i class="fa fa-bars"></i></button></div><div class="collapse navbar-collapse navbar-left navbar-main-collapse"></div><div class="collapse navbar-collapse navbar-right navbar-main-collapse"><ul class="nav navbar-nav"><li><a href="/blog" class="page-scroll">Blog 🔨</a></li><li><a href="/#about" class="page-scroll">Projects ⚡</a></li></ul></div></div></nav><main id="content"><div id="archive" class="container"><div class="row"> <div class="col-sm-2 col-md-2"><h3>Categories</h3><a href="/blog"><p>All</p></a><a href="/categories/Career"><p>Career</p></a><a href="/categories/Programming"><p>Programming</p></a><a href="/categories/Javascript"><p>Javascript</p></a><a href="/categories/Laravel"><p>Laravel</p></a><a href="/categories/Cloud"><p>Cloud</p></a><a href="/categories/PHP"><p>PHP</p></a></div><div class="col-xs-12 col-md-8"><article class="post"><div class="row"><div class="col-md-10 col-md-offset-1"><h1 class="post-title">Ruby On Rails or Laravel, which do you use?</h1></div></div><div class="row"><div class="post-meta"><h5><span>Connor Leech</span><span class="date"> - Nov 13, 2016&ensp;in<span class="post-categories">&ensp;<a href="/categories/Career/" class="post-category">Career</a></span></span></h5><a target="_blank" href="http://twitter.com/intent/tweet?status=Ruby On Rails or Laravel, which do you use? by @Connor11528+http://connorleech.info/blog/Ruby-On-Rails-or-Laravel-which-do-you-use/" class="btn btn-primary social-share twitter"><i class="fa fa-twitter fa-2x"><span class="hidden-xs"></span></i></a><a target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://connorleech.info/blog/Ruby-On-Rails-or-Laravel-which-do-you-use/&amp;title=Ruby On Rails or Laravel, which do you use?&amp;source=connorleech.info" class="btn btn-primary social-share linkedin"><i class="fa fa-linkedin fa-2x"><span class="hidden-xs"></span></i></a></div></div><div class="post-body"><p>Last week I <a href="/blog/Building-a-feature-complete-bookmarking-app-with-Vue.js-Express-and-Sequelize-ORM/">wrote
+about</a>
+how to build a bookmarking application using Sequelize ORM — an application that
+allows Javascript to speak SQL. This week we’re going dive in to Ruby On Rails
+and Laravel and the pros and cons of each web framework.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*94Oae3_D1l5fpDPxX_oAQw.jpeg" alt="">
+<span class="figcaption_hack">Laravel is branded as The PHP Framework for Web Artisans</span></p>
+<h3 id="Web-what"><a href="#Web-what" class="headerlink" title="Web what?"></a>Web what?</h3><p><a href="https://en.wikipedia.org/wiki/Web_framework" target="_blank" rel="noopener">Web frameworks</a> are libraries of
+code with varying degrees of functionality written in a programming language to
+carry out common web development tasks. Common tasks include authenticating
+users, reading, writing, updating the database, sending emails and interacting
+with third party APIs (such as LinkedIn, Facebook and Twitter). Web frameworks
+run on the server side of the application and process requests from web clients
+(such as browsers, iPhones, toasters etc). Laravel is written in the PHP
+programming language. Ruby On Rails is written in the Ruby programming language.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*xntp5lTnrBD3qJtpz1laFg.jpeg" alt=""></p>
+<p><span class="figcaption_hack">Ruby On Rails historically has been one of the most popular frameworks for developers on the web.</span></p>
+<h3 id="Common-Ground"><a href="#Common-Ground" class="headerlink" title="Common Ground"></a>Common Ground</h3><p>Ruby On Rails and Laravel both operate off of the Model View Controller (MVC)
+pattern. This means that both frameworks use their respective programming
+languages to model tables in the database, views in HTML and controllers to
+process requests. In both frameworks the general flow is user sends request from
+web browser (the View), the Controller handles the request and invokes a Model
+which then updates the database. Changes are then reflected back in the View via
+the Controller.</p>
+<p>Additionally, both frameworks rely on Relational Databases. This means the data
+is structured similarly to the way Excel spreadsheets are laid out. There are
+columns and rows. Structured Query Language (SQL) is what the programming
+languages use behind the scenes to issue database commands. Developers use web
+frameworks in part because it allows them to write PHP or Ruby instead of raw
+SQL queries, making them more productive.</p>
+<h3 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h3><p>Ruby On Rails is a much older framework. It was first released by
+<a href="https://medium.com/@dhh" target="_blank" rel="noopener">DHH</a> in 2004 for his company Basecamp. Laravel was not
+created until 2011 when <a href="https://medium.com/@taylorotwell" target="_blank" rel="noopener">Taylor Otwell</a>
+released it to solve problems that plagued existing PHP frameworks. Laravel has
+rocketed in popularity in recent years while Rails has decreased in popularity
+(according to Google Trends).</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*fix-SvGdj5jhHKliTrLFjw.png" alt=""></p>
+<p><span class="figcaption_hack">Laravel has increased in popularity while ROR has declined slightly.</span></p>
+<p>Both frameworks are actively maintained and updated. Laravel and Ruby On Rails
+each had their fifth major release (version 5.0.0) this past summer.</p>
+<blockquote>
+<p>For companies and developers deciding between the two frameworks it is a choice
+between the older, tried and tested software versus the relatively new kid on
+the block.</p>
+</blockquote>
+<h3 id="The-Languages"><a href="#The-Languages" class="headerlink" title="The Languages"></a>The Languages</h3><p>Ruby is decried for being slow. PHP is feared to be messy and unmaintainable.
+These are the common critiques of the languages themselves.</p>
+<p><img src="https://cdn-images-1.medium.com/max/600/1*KEjp_OE32wCfCEzOstiz6g.png" alt=""></p>
+<p><span class="figcaption_hack">The infamous Twitter “Fail Whale”</span></p>
+<p>Ruby is not as fast as other programming languages. Twitter experienced issues
+with Ruby On Rails in its very early days for processing millions of requests
+per second during peak hours. It is important to note though that the language
+has increased its speed dramatically from 2004 to 2016. Additionally, there are
+Ruby tools out there to increase scalability such as
+<a href="https://www.chef.io/chef/" target="_blank" rel="noopener">Chef</a> with AWS and
+<a href="http://capistranorb.com/#" target="_blank" rel="noopener">Capistrano</a> (among others) to increase performance.
+DHH wrote a great post called <a href="https://m.signalvnoise.com/ruby-has-been-fast-enough-for-13-years-afff4a54abc7#.1g0ltm38i" target="_blank" rel="noopener">Ruby has been fast enough for 13
+years</a>
+outlining his position.</p>
+<p>PHP on the other hand has been around since the very beginning of the web in the
+early 1990s. Facebook is built on PHP and has invested heavily in its ongoing
+development. PHP has a bad wrap especially among older developers because PHP
+frameworks used to be a complete mess. There was not a central way to manage
+dependencies. Ruby has gems, Node.js has npm, Python has pip, Java has Mavenand
+PHP did not have this system until 2012.</p>
+<p>The PHP development landscape changed with the release of
+<a href="https://getcomposer.org/" target="_blank" rel="noopener">Composer</a>. Developers could now use individual
+packages and mix and match instead of relying on one monolithic PHP framework to
+handle all of their problems. Composer is required for modern versions of
+Laravel.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*m3Qyep3gp4hRbe_cLCg29w.png" alt=""></p>
+<p><span class="figcaption_hack">Package Manager for PHP that changed the game.</span></p>
+<h3 id="The-Community"><a href="#The-Community" class="headerlink" title="The Community"></a>The Community</h3><p>Both frameworks have surged in popularity because of their accessibility. Ruby
+On Rails has <a href="http://railscasts.com/" target="_blank" rel="noopener">RailsCasts</a>. Laravel has
+<a href="https://laracasts.com/" target="_blank" rel="noopener">Laracasts</a>. Both have many free videos but require
+subscriptions for unblocked access.</p>
+<p>Rails has been around for longer and more has been written about it. Laravel is
+growing faster and the community is smaller but more active. There are no
+shortage of free resources online for learning either framework.</p>
+<p>Which framework are you using? Please feel free to respond in the comments!</p>
+<hr>
+
+<p>Originally published <a href="https://medium.com/@connorleech/php-laravel-ruby-on-rails-and-web-frameworks-32c1e50cea2d" target="_blank" rel="noopener">on Medium</a></p>
+</div><div id="disqus_thread"></div></article><nav class="pagination"><a href="/blog/Generate-Authentication-for-a-Laravel-5-Web-Application/" title="Generate Authentication for a Laravel 5.3 Web Application" class="btn-default entry-pagination__link entry-pagination__link--prev">Prev</a><a href="/blog/Building-a-feature-complete-bookmarking-app-with-Vue.js-Express-and-Sequelize-ORM/" title="Building a feature complete bookmarking app with Vue.js, Express and Sequelize ORM" class="btn-default entry-pagination__link entry-pagination__link--next">Next</a></nav></div></div></div></main><footer class="footer"><div class="container"><div class="row"><div class="col-sm-6"><h4>Connor's Dev Newsletter</h4><p>Very occassional updates. You're free to sign up.</p><ul><li><form action="//herokuapp.us14.list-manage.com/subscribe/post?u=42dd73a709fbadb4a29ef1d0d&amp;amp;id=b77fdad58d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate="" class="validate"><div class="input-group"><input type="email" value="" name="EMAIL" id="mce-EMAIL" placeholder="Enter your email here" class="required email form-control input-lg"><div id="mce-error-response" style="display:none" class="response"></div><div id="mce-success-response" style="display:none" class="response"></div><div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_42dd73a709fbadb4a29ef1d0d_b77fdad58d" tabindex="-1" value=""></div><span class="input-group-btn"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary btn-lg"></span></div></form></li></ul></div><div class="col-sm-2 col-sm-offset-1"><h4>Connect</h4><ul><li> <a target="_blank" href="https://github.com/connor11528">GitHub</a></li><li> <a target="_blank" href="https://www.linkedin.com/in/connorleech">LinkedIn</a></li><li> <a target="_blank" href="https://twitter.com/connor11528">Twitter</a></li><li><a target="_blank" href="https://medium.com/@connorleech">Medium</a></li><li><a target="_blank" href="https://stackoverflow.com/users/2031033/connor-leech">Stackoverflow</a></li><li><a target="_blank" href="https://plus.google.com/u/0/+ConnorLeech">Google+</a></li></ul></div><div class="col-sm-3"><h4>Email</h4><ul><li> <a href="mailto:connorleech@gmail.com">connorleech@gmail.com</a></li></ul></div></div></div></footer><!-- vendor--><script src="/bower_components/jquery/dist/jquery.min.js"></script><script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script><script src="/bower_components/wow/dist/wow.min.js"></script><script src="/bower_components/jquery-easing/jquery.easing.min.js"></script><script src="/bower_components/jquery-color/jquery.color.js"></script><script src="/bower_components/scrollmagic/scrollmagic/minified/ScrollMagic.min.js"></script><script src="/bower_components/scrollmagic/scrollmagic/minified/plugins/debug.addIndicators.min.js"></script><script src="/bower_components/vivus/dist/vivus.min.js"></script><!-- require modules--><script src="/js/require.js"></script><script src="/js/app.js"></script><!-- analytics--><!-- disqus--><script>(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://connorleech.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></body></html>

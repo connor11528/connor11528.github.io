@@ -1,0 +1,277 @@
+<h1 id="vivus-js"><a href="#vivus-js" class="headerlink" title="vivus.js"></a>vivus.js</h1><p>Demo available on <a href="http://maxwellito.github.io/vivus">http://maxwellito.github.io/vivus</a></p>
+<p>Vivus is a lightweight JavaScript class (with no dependencies) that allows you to animate SVGs, giving them the appearence of being drawn. There are a variety of different animations available, as well as the option to create a custom script to draw your SVG in whatever way you like.</p>
+<p>Available via:</p>
+<ul>
+<li><a href="http://bower.io/">Bower</a>: <code>bower install vivus</code></li>
+<li><a href="https://www.npmjs.com/package/vivus">NPM</a>: <code>npm install vivus</code></li>
+<li><a href="http://spmjs.io/package/vivus">SPM</a>: <code>spm install vivus</code></li>
+<li><a href="http://www.jsdelivr.com/#!vivus">jsDelivr CDN</a>: <code>//cdn.jsdelivr.net/vivus/latest/vivus.min.js</code></li>
+<li><a href="http://www.webjars.org/">WebJars</a></li>
+</ul>
+<p>Join the conversation on <a href="https://gitter.im/maxwellito/vivus">Gitter</a></p>
+<h2 id="Animations"><a href="#Animations" class="headerlink" title="Animations"></a>Animations</h2><p>On the following images, the pink color represents the <code>duration</code> value, and the blue one is for <code>delay</code> value.</p>
+<h3 id="Delayed"><a href="#Delayed" class="headerlink" title="Delayed"></a>Delayed</h3><p><img src="https://raw.github.com/maxwellito/vivus/master/assets/delayed.png" alt="Timeline for delayed animation"></p>
+<p>Every path element is drawn at the same time with a small delay at the start. This is currently the default animation.</p>
+<h3 id="Async"><a href="#Async" class="headerlink" title="Async"></a>Async</h3><p><img src="https://raw.github.com/maxwellito/vivus/master/assets/async.png" alt="Timeline for async animation"></p>
+<p>Each line is drawn asynchronously. They all start and finish at the same time, hence the name <code>async</code>.</p>
+<h3 id="OneByOne"><a href="#OneByOne" class="headerlink" title="OneByOne"></a>OneByOne</h3><p><img src="https://raw.github.com/maxwellito/vivus/master/assets/oneByOne.png" alt="Timeline for oneByOne animation"></p>
+<p>Each path element is drawn one after the other. This animation gives the best impression of live drawing. The duration for each line depends on their length to make a constant drawing speed.</p>
+<h2 id="Principles"><a href="#Principles" class="headerlink" title="Principles"></a>Principles</h2><p>To get this effect, the script uses the CSS property <code>strokeDashoffset</code>. This property manages the stroke offset on every line of the SVG. Now, all we have to do is add some JavaScript to update this value progressively and the magic begins.</p>
+<p>However, there’s a problem with this. The <code>strokeDashoffset</code> property is only available on the path elements. This is an issue because in an SVG there are a lot of elements such as <code>circle</code>, <code>rect</code>, <code>line</code> and <code>polyline</code> which will break the animation. So to fix this, there is another class available in the repo called <code>pathformer</code>. It’s made for transforming all objects of your SVG into <code>path</code> elements to be able to use <code>strokeDashoffset</code> and animate your SVGs.</p>
+<p><em>The animation always draws elements in the same order as they are defined in the SVG tag.</em></p>
+<p>There are few conditions that your SVG must meet:</p>
+<ul>
+<li><p>All elements must have a stroke property and cannot be filled. This is because the animation only looks to progressively draw strokes and will not check for filled colours. For example: fill: “none”; stroke: “#FFF”;</p>
+</li>
+<li><p>You shoud avoid creating any hidden path elements in your SVG. Vivus considers them all eligible to be animated, so it is advised to remove them before playing with it. If they are not removed the animation might not achieve the desired effect, with blank areas and gaps appearing.</p>
+</li>
+<li><p><code>text</code> elements aren’t allowed, they cannot be transformed into <code>path</code> elements. See <a href="https://github.com/maxwellito/vivus/issues/22">#22</a> for more details.</p>
+</li>
+</ul>
+<p>The code is inspired from other repositories. The drawer is inspired from the excellent <a href="http://tympanus.net/codrops/">Codrops</a> about the post <a href="http://tympanus.net/codrops/2013/12/30/svg-drawing-animation/">SVG Drawing Animation</a> (if you don’t know this website, get ready to have your mind blown). Then for the pathformer, there is a lot of work from <a href="https://github.com/Waest/SVGPathConverter">SVGPathConverter</a> by <a href="https://github.com/Waest">Waest</a>.</p>
+<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>As I said, no dependencies here. All you need to do is include the scripts.</p>
+<p><strong>Inline SVG</strong></p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">id</span>=<span class="string">"my-svg"</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">path...</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">path...</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">path...</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">svg</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span>
+<span class="javascript">  <span class="keyword">new</span> Vivus(<span class="string">'my-svg'</span>, {<span class="attr">duration</span>: <span class="number">200</span>}, myCallback);</span>
+<span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>
+</code></pre>
+<p><strong>Dynamic load</strong></p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">object</span> <span class="attr">id</span>=<span class="string">"my-svg"</span> <span class="attr">type</span>=<span class="string">"image/svg+xml"</span> <span class="attr">data</span>=<span class="string">"link/to/my.svg"</span>&gt;</span><span class="tag">&lt;/<span class="name">object</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span>
+<span class="javascript">  <span class="keyword">new</span> Vivus(<span class="string">'my-svg'</span>, {<span class="attr">duration</span>: <span class="number">200</span>}, myCallback);</span>
+<span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>
+</code></pre>
+<p>or</p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"my-div"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+
+<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span>
+<span class="javascript">  <span class="keyword">new</span> Vivus(<span class="string">'my-div'</span>, {<span class="attr">duration</span>: <span class="number">200</span>, <span class="attr">file</span>: <span class="string">'link/to/my.svg'</span>}, myCallback);</span>
+<span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>
+</code></pre>
+<p>By default the <code>object</code> created will take the size of the parent element, this one must have a height and width or your SVG might not appear.</p>
+<p>If you need to edit this object, it is accessible in the <code>onReady</code> callback:</p>
+<pre><code class="js"><span class="keyword">new</span> Vivus(<span class="string">'my-div-id'</span>, {
+  file: <span class="string">'link/to/my.svg'</span>
+  onReady: <span class="function"><span class="keyword">function</span> (<span class="params">myVivus</span>) </span>{
+    <span class="comment">// `el` property is the SVG element</span>
+    myVivus.el.setAttribute(<span class="string">'height'</span>, <span class="string">'auto'</span>);
+  }
+});
+</code></pre>
+<p>Check out the <a href="https://github.com/maxwellito/vivus/blob/master/hacks.md">hacks page</a> for more tricks.</p>
+<h3 id="Constructor"><a href="#Constructor" class="headerlink" title="Constructor"></a>Constructor</h3><p>The Vivus constructor asks for 3 parameters:</p>
+<ul>
+<li>ID (or object) of DOM element to interact with.<br>It can be an inline SVG or a wrapper element to append an object tag from the option <code>file</code></li>
+<li>Option object (described in the following  |</li>
+<li>Callback to call at the end of the animation (optional)</li>
+</ul>
+<h3 id="Option-list"><a href="#Option-list" class="headerlink" title="Option list"></a>Option list</h3><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td>string</td>
+<td>Defines what kind of animation will be used: <code>delayed</code>, <code>async</code>, <code>oneByOne</code>, <code>script</code>, <code>scenario</code> or <code>scenario-sync</code>. [Default: <code>delayed</code>]</td>
+</tr>
+<tr>
+<td><code>file</code></td>
+<td>string</td>
+<td>Link to the SVG to animate. If set, Vivus will create an object tag and append it to the DOM element given to the constructor. Be careful, use the <code>onReady</code> callback before playing with the Vivus instance.</td>
+</tr>
+<tr>
+<td><code>start</code></td>
+<td>string</td>
+<td>Defines how to trigger the animation (<code>inViewport</code> once the SVG is in the viewport, <code>manual</code> gives you the freedom to call draw method to start, <code>autostart</code> makes it start right now). [Default: <code>inViewport</code>]</td>
+</tr>
+<tr>
+<td><code>duration</code></td>
+<td>integer</td>
+<td>Animation duration, in frames. [Default: <code>200</code>]</td>
+</tr>
+<tr>
+<td><code>delay</code></td>
+<td>integer</td>
+<td>Time between the drawing of first and last path, in frames (only for <code>delayed</code> animations).</td>
+</tr>
+<tr>
+<td><code>onReady</code></td>
+<td>function</td>
+<td>Function called when the instance is ready to play.</td>
+</tr>
+<tr>
+<td><code>pathTimingFunction</code></td>
+<td>function</td>
+<td>Timing animation function for each path element of the SVG. Check the <a href="#timing-function">timing function part</a>.</td>
+</tr>
+<tr>
+<td><code>animTimingFunction</code></td>
+<td>function</td>
+<td>Timing animation function for the complete SVG. Check the <a href="#timing-function">timing function part</a>.</td>
+</tr>
+<tr>
+<td><code>dashGap</code></td>
+<td>integer</td>
+<td>Whitespace extra margin between dashes. Increase it in case of glitches at the initial state of the animation. [Default: <code>2</code>]</td>
+</tr>
+<tr>
+<td><code>forceRender</code></td>
+<td>boolean</td>
+<td>Force the browser to re-render all updated path items. By default, the value is <code>true</code> on IE only. (check the ‘troubleshoot’ section for more details).</td>
+</tr>
+<tr>
+<td><code>selfDestroy</code></td>
+<td>boolean</td>
+<td>Removes all extra styling on the SVG, and leaves it as original.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h3><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>play(speed)</code></td>
+<td>Plays the animation with the speed given in parameter. This value can be negative to go backward, between 0 and 1 to go slowly, or superior to 1 to go fast. [Default: <code>1</code>]</td>
+</tr>
+<tr>
+<td><code>stop()</code></td>
+<td>Stops the animation.</td>
+</tr>
+<tr>
+<td><code>reset()</code></td>
+<td>Reinitialises the SVG to the original state: undrawn.</td>
+</tr>
+<tr>
+<td><code>finish()</code></td>
+<td>Set the SVG to the final state: drawn.</td>
+</tr>
+<tr>
+<td><code>setFrameProgress(progress)</code></td>
+<td>Set the progress of the animation. Progress must be a number between 0 and 1.</td>
+</tr>
+<tr>
+<td><code>getStatus()</code></td>
+<td>Get the status of the animation between <code>start</code>, <code>progress</code>, <code>end</code></td>
+</tr>
+<tr>
+<td><code>destroy()</code></td>
+<td>Reset the SVG but make the instance out of order.</td>
+</tr>
+</tbody>
+</table>
+<p>These methods return the object so you can chain the actions.</p>
+<pre><code class="js"><span class="keyword">var</span> myVivus = <span class="keyword">new</span> Vivus(<span class="string">'my-svg-id'</span>);
+myVivus
+  .stop()
+  .reset()
+  .play(<span class="number">2</span>)
+</code></pre>
+<h2 id="Timing-function"><a href="#Timing-function" class="headerlink" title="Timing function"></a>Timing function</h2><p>To give more freedom, it’s possible to override the animation of each path and/or the entire SVG. It works a bit like the CSS animation timing function. But instead of using a cubic-bezier function, it use a simple JavaScript function. It must accept a number as parameter (between 0 to 1), then return a number (also between 0 and 1). It’s a hook.</p>
+<p>If you don’t want to create your own, timing methods are available via the constructor object: <code>EASE</code>, <code>EASE_IN</code>, <code>EASE_OUT</code> and <code>EASE_OUT_BOUNCE</code>. Then set it in the option object to enjoy them.</p>
+<pre><code class="js"><span class="comment">// Here, the ease animation will be use for the global drawing.</span>
+<span class="keyword">new</span> Vivus(<span class="string">'my-svg-id'</span>, {
+    type: <span class="string">'delayed'</span>,
+    duration: <span class="number">200</span>,
+    animTimingFunction: Vivus.EASE
+}, myCallback);
+</code></pre>
+<p><strong>WARNING</strong>: <code>animTimingFunction</code> is called at every frame of the animation, and <code>pathTimingFunction</code> is also called at every frame for each path of your SVG. So be careful about them. Keep it simple, or it can affect the performances.</p>
+<h2 id="Extra-attributes"><a href="#Extra-attributes" class="headerlink" title="Extra attributes"></a>Extra attributes</h2><p>The attribute <code>data-ignore</code> allow to ignore path tags from the vivus animation.</p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">id</span>=<span class="string">"my-svg"</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">path...</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">path</span> <span class="attr">data-ignore</span>=<span class="string">"true"</span> <span class="attr">...</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">path...</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">svg</span>&gt;</span>
+</code></pre>
+<p>In this case, the second path won’t be part of the animation.</p>
+<h2 id="Scenarize"><a href="#Scenarize" class="headerlink" title="Scenarize"></a>Scenarize</h2><p>This feature allows you to script the animation of your SVG. For this, the custom values will be set directly in the DOM of the SVG.</p>
+<h3 id="scenario"><a href="#scenario" class="headerlink" title="scenario"></a><code>scenario</code></h3><p>This type is easier to understand, but longer to implement. You just have to define the start and duration of each element with <code>data-start</code> and <code>data-duration</code> attributes. If it is missing, it will use the default value given to the constructor.
+The best part of this type is the flexibility it provides. You don’t have to respect the order/stack of the SVG and you can start with the last element, then continue with the first to finish with all the rest at the same time.</p>
+<p>You will then have to define custom rules for each element in your SVG via extra attributes in your SVG DOM :</p>
+<ul>
+<li><code>data-start</code> (integer)
+time when the animation must start, in frames</li>
+<li><code>data-duration</code> (integer)
+animation duration of this path, in frames</li>
+</ul>
+<pre><code class="html"><span class="tag">&lt;<span class="name">svg</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">path</span> <span class="attr">data-start</span>=<span class="string">"0"</span> <span class="attr">data-duration</span>=<span class="string">"10"</span> <span class="attr">...</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">path</span> <span class="attr">data-start</span>=<span class="string">"20"</span> <span class="attr">data-duration</span>=<span class="string">"10"</span> <span class="attr">...</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">path</span> <span class="attr">data-start</span>=<span class="string">"20"</span> <span class="attr">data-duration</span>=<span class="string">"20"</span> <span class="attr">...</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">path</span> <span class="attr">data-start</span>=<span class="string">"0"</span> <span class="attr">data-duration</span>=<span class="string">"30"</span> <span class="attr">...</span>/&gt;</span>
+<span class="tag">&lt;/<span class="name">svg</span>&gt;</span>
+</code></pre>
+<h3 id="scenario-sync"><a href="#scenario-sync" class="headerlink" title="scenario-sync"></a><code>scenario-sync</code></h3><p>It’s not the sexiest code ever, but it’s quite flexible. In addition to this, the behaviour is fairly different.
+By using this animation type, the default behaviour is the same as <code>oneByOne</code>. However, you can define some properties on a specific path item such as the duration, the delay to start (from the end of the previous path) and if it should be played asynchronously.</p>
+<ul>
+<li><code>data-delay</code> (integer)
+time between the end of the animation of the previous path and the start of the current path, in frames</li>
+<li><code>data-duration</code> (integer)
+duration of this path animation, in frames</li>
+<li><code>data-async</code> (no value required)
+make the drawing of this path asynchronous. It means the next path will start at the same time.
+If a path does not have an attribute for duration or delay then the default values, set in the options, will be used.</li>
+</ul>
+<p>Example: here is a simple SVG containing 5 elements. With the following options <code>{duration: 20, delay: 0}</code>, we should get this timeline</p>
+<p><img src="https://raw.github.com/maxwellito/vivus/master/assets/script_default.png" alt="Timeline for script animation by default"></p>
+<p>This looks like ‘oneByOne’ animation, synchronous mode. But to make it a bit custom, here is what I can do:</p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">svg</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">path</span> <span class="attr">data-duration</span>=<span class="string">"10"</span> <span class="attr">...</span>/&gt;</span>
+    <span class="tag">&lt;<span class="name">path</span> <span class="attr">data-delay</span>=<span class="string">"10"</span> <span class="attr">data-async</span> <span class="attr">...</span>/&gt;</span>
+    <span class="tag">&lt;<span class="name">path</span> <span class="attr">data-delay</span>=<span class="string">"15"</span> <span class="attr">...</span>/&gt;</span>
+    <span class="tag">&lt;<span class="name">path</span> <span class="attr">data-duration</span>=<span class="string">"10"</span> <span class="attr">data-delay</span>=<span class="string">"45"</span> <span class="attr">data-async</span> <span class="attr">...</span>/&gt;</span>
+    <span class="tag">&lt;<span class="name">path</span> <span class="attr">data-duration</span>=<span class="string">"50"</span> <span class="attr">data-delay</span>=<span class="string">"5"</span> <span class="attr">...</span>/&gt;</span>
+<span class="tag">&lt;/<span class="name">svg</span>&gt;</span>
+</code></pre>
+<p>This scenario should give us</p>
+<p><img src="https://raw.github.com/maxwellito/vivus/master/assets/script_custom.png" alt="Timeline for this custom script animation"></p>
+<p>I’m sorry if it does not look very sexy, and it’s not really easy to use. I’m happy to make any changes, as long as the idea sounds interesting. Post an issue and I’ll be very happy to talk about it!</p>
+<h2 id="Development"><a href="#Development" class="headerlink" title="Development"></a>Development</h2><p>To make it simpler a gulp file is set up to automise minifying, JShint and tests.
+If you have never used Gulp before this is a good opportunity. To use it, you need to install NodeJS first then run <code>sudo npm install -g gulp</code>.</p>
+<p>To start, you will need to install the repo dependencies:</p>
+<pre><code class="bash">$ npm install
+</code></pre>
+<p>Then you can run Gulp with one of the following tasks:</p>
+<ul>
+<li><code>distrib</code> make the build (generate <code>dist/vivus.js</code> and <code>dist/vivus.min.js</code>)</li>
+<li><code>lint</code> run JShint on the source files</li>
+<li><code>test</code> run Karma</li>
+<li><code>develop</code> keep watching your files, if any change is applied, Gulp will run the task(s) related to it.</li>
+</ul>
+<h2 id="Troubleshoot"><a href="#Troubleshoot" class="headerlink" title="Troubleshoot"></a>Troubleshoot</h2><h3 id="Internet-Explorer"><a href="#Internet-Explorer" class="headerlink" title="Internet Explorer"></a>Internet Explorer</h3><p>Some SVG weren’t working at all. The only solution found was to clone and replace each updated path element. Of course this solution requires more resources and a lot of DOM manipulation, but it will give a smooth animation like other browsers. This fallback is only applied on Internet Explorer (all versions), and can be disabled via the option <code>forceRender</code>.</p>
+<p>Replacing each updated path by a clone was the only way to force IE to re-render the SVG. On some SVGs this trick is not necessary, but IE can be a bit tricky with this. If you’re worried about performances, I would recommend you to check if your SVG works correctly by disabling the <code>forceRender</code> option. If it works correctly on IE, then keep it like this.</p>
+<p>By default, <code>forceRender</code> is <code>true</code> on Internet Explorer only.</p>
+<h3 id="Firefox"><a href="#Firefox" class="headerlink" title="Firefox"></a>Firefox</h3><p>For Firefox users, you might encounter some glitches depending on your SVG and browser version. On versions before 36, there is a problem retrieving path length via <code>getTotalLength</code> method. Returning 174321516544 instead of 209 (I’m not exaggerating, this comes from a real case), messing up the entire animation treatment. Unfortunately, there’s nothing that this library can do, this is due to Firefox. I hope to find a workaround, but at the moment I can only recommend that you test your animation on previous versions of Firefox.</p>
+<h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><p>For an easier debug have a look to the attribute <code>map</code> of your Vivus object. This contains the mapping of your animation. If you’re using a modern browser, I recommend <code>console.table</code> to get a nice output of the array which will make your debug easier.</p>
+<pre><code class="javascript"><span class="keyword">var</span> logo = <span class="keyword">new</span> Vivus(<span class="string">'myLogo'</span>, {<span class="attr">type</span>: <span class="string">'scenario-sync'</span>});
+
+<span class="comment">// The property 'map' contain all the SVG mapping</span>
+<span class="built_in">console</span>.table(logo.map);
+</code></pre>
+<h2 id="Special-thanks"><a href="#Special-thanks" class="headerlink" title="Special thanks!"></a>Special thanks!</h2><p>Thanks to all contributors! Also users who pushed me to improve the library by publishing it on NPM, or browser compatibility or features. Also thanks for fixing my awful english :)</p>
+<ul>
+<li><a href="https://github.com/jolic">@jolic</a> for dynamic SVG loading, ignore invisible paths, infinite and beyond… </li>
+<li><a href="https://github.com/BenMcGeachy">@BenMcGeachy</a> for making the documentation understandable</li>
+<li><a href="https://github.com/TranscendOfSypherus">@TranscendOfSypherus</a> for fixing the PathFormer</li>
+<li><a href="https://github.com/flyingfisch">@flyingfisch</a> for general helping with issues</li>
+<li><a href="https://github.com/morgangiraud">@morgangiraud</a> on the ignore invisible paths</li>
+<li><a href="https://github.com/Nerdissimo">@Nerdissimo</a> for inserting SVG without <code>object</code> wrapper </li>
+</ul>
+<p>and many others…</p>

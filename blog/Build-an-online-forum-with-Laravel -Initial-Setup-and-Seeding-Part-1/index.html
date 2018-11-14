@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#"><head><meta name="generator" content="Hexo 3.8.0"><meta name="author" content="Connor Leech"><title>Laravel 5 Initial Database Setup and Seeding</title><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="cleartype" content="on"><meta name="MobileOptimized" content="320"><meta name="HandheldFriendly" content="True"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="description" content="Get Laravel, MySQL and SequelPro setup for starting a new web application. I refer back to this post all the time when starting new projects: `mysql -uroot -p` "><meta name="keywords" content="laravel, aws, javascript, php, developer, software engineer, web development, software, node.js, serverless, lambda, san francisco, bay area, east bay, vue, vuejs, vue.js, vue 2, laravel 5, amazon web services"><meta name="zipcode" content="94501"><meta name="city" content="Alameda"><meta name="state" content="California"><meta name="country" content="United States"><meta name="language" content="EN"><meta property="og:site_name" content="Connor Leech Blog | Javascript and Laravel tutorials"><meta property="og:description" content="Get notified about the latest trends in web development, career growth and cloud infrastructure. I send emails about twice a month covering tutorials in Javascript, Laravel and Cloud"><meta property="og:image" content="http://i0.kym-cdn.com/photos/images/original/001/018/899/936.jpg"><meta property="og:title" content="Laravel 5 Initial Database Setup and Seeding"><meta property="og:description" content="Get Laravel, MySQL and SequelPro setup for starting a new web application. I refer back to this post all the time when starting new projects: `mysql -uroot -p` "><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70809574-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-70809574-1');
+</script><!-- Favicon--><link rel="shortcut icon" type="image/png" href="/images/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><!-- Vendor Fonts--><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type="text/css"><link href="/bower_components/animate.css/animate.min.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Yantramanav" rel="stylesheet"><!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries--><!-- WARNING: Respond.js doesn't work if you view the page via file://--><!--if lt IE 9script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+--><link rel="alternate" href="/atom.xml" title="config.title" type="application/rss2.xml"><link rel="stylesheet" href="/css/main.css"></head><body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" class="post"><!-- Nav--><nav role="navigation" class="navbar navbar-custom navbar-fixed-top"><div class="container"><div class="navbar-header"><a href="https://employbl.com/" target="_blank" class="navbar-brand"><img src="/images/employbl_logo.svg" style="height:100px; width:100px;"></a><button type="button" data-toggle="collapse" data-target=".navbar-main-collapse" class="navbar-toggle"><i class="fa fa-bars"></i></button></div><div class="collapse navbar-collapse navbar-left navbar-main-collapse"></div><div class="collapse navbar-collapse navbar-right navbar-main-collapse"><ul class="nav navbar-nav"><li><a href="/blog" class="page-scroll">Blog 🔨</a></li><li><a href="/#about" class="page-scroll">Projects ⚡</a></li></ul></div></div></nav><main id="content"><div id="archive" class="container"><div class="row"> <div class="col-sm-2 col-md-2"><h3>Categories</h3><a href="/blog"><p>All</p></a><a href="/categories/Career"><p>Career</p></a><a href="/categories/Programming"><p>Programming</p></a><a href="/categories/Javascript"><p>Javascript</p></a><a href="/categories/Laravel"><p>Laravel</p></a><a href="/categories/Cloud"><p>Cloud</p></a><a href="/categories/PHP"><p>PHP</p></a></div><div class="col-xs-12 col-md-8"><article class="post"><div class="row"><div class="col-md-10 col-md-offset-1"><h1 class="post-title">Laravel 5 Initial Database Setup and Seeding</h1></div></div><div class="row"><div class="post-meta"><h5><span>Connor Leech</span><span class="date"> - Apr 30, 2017&ensp;in<span class="post-categories">&ensp;<a href="/categories/Laravel/" class="post-category">Laravel</a></span></span></h5><a target="_blank" href="http://twitter.com/intent/tweet?status=Laravel 5 Initial Database Setup and Seeding by @Connor11528+http://connorleech.info/blog/Build-an-online-forum-with-Laravel -Initial-Setup-and-Seeding-Part-1/" class="btn btn-primary social-share twitter"><i class="fa fa-twitter fa-2x"><span class="hidden-xs"></span></i></a><a target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://connorleech.info/blog/Build-an-online-forum-with-Laravel -Initial-Setup-and-Seeding-Part-1/&amp;title=Laravel 5 Initial Database Setup and Seeding&amp;source=connorleech.info" class="btn btn-primary social-share linkedin"><i class="fa fa-linkedin fa-2x"><span class="hidden-xs"></span></i></a></div></div><div class="post-body"><p><img src="https://cdn-images-1.medium.com/max/800/1*F64gVmpO9-reN5L2pRTrGg.png" alt="">
+<span class="figcaption_hack">Laracasts video course — available here:
+<a href="https://laracasts.com/series/lets-build-a-forum-with-laravel/episodes/1" target="_blank" rel="noopener">https://laracasts.com/series/lets-build-a-forum-with-laravel/episodes/1</a></span></p>
+<p><strong>tl;dr</strong> — Source code:
+<a href="https://github.com/connor11528/laravel-forum" target="_blank" rel="noopener">https://github.com/connor11528/laravel-forum</a></p>
+<p>Thank you Jeffrey Way and Laracasts for this awesome series! The full video
+tutorials are available here:
+<a href="https://laracasts.com/series/lets-build-a-forum-with-laravel" target="_blank" rel="noopener">https://laracasts.com/series/lets-build-a-forum-with-laravel</a></p>
+<p>We’re going to be using Laravel 5.4.</p>
+<p>Create application:</p>
+<pre><code>$ laravel new laravel-forum
+$ cd laravel-forum
+$ composer install
+</code></pre><h4 id="Application-Structure-and-Models"><a href="#Application-Structure-and-Models" class="headerlink" title="Application Structure and Models"></a>Application Structure and Models</h4><ol>
+<li>Thread</li>
+<li>Reply</li>
+<li>User<br>  A. Thread is created by a user<br>  B. A reply belongs to a thread,
+and belongs to a user.</li>
+</ol>
+<p>Next we have a command to make the Thread model with a migration and a
+<a href="https://laravel.com/docs/5.4/controllers#resource-controllers" target="_blank" rel="noopener">resourceful
+controller</a>.
+Laravel is bundled with a command line tool called
+<a href="https://laravel.com/docs/5.4/artisan" target="_blank" rel="noopener">Artisan</a> that assists us in building our
+application.</p>
+<pre><code>$ php artisan make:model Thread -mr
+</code></pre><p>Next update the migration for Thread
+(<strong>database/migrations/<timestamp>_create_threads_table.php</timestamp></strong>):</p>
+<pre><code>public function up()
+{
+   Schema::create(‘threads’, function (Blueprint $table) {
+       $table-&gt;increments(‘id’);
+       $table-&gt;integer(‘user_id’);
+       $table-&gt;string(‘title’);
+       $table-&gt;text(‘body’);
+       $table-&gt;timestamps();
+   });
+}
+</code></pre><p>Next up we have to interact with MySQL. If you do not have MySQL installed and
+are on Mac, I wrote a tutorial available <a href="https://medium.com/@connorleech/how-to-install-mysql-on-mac-osx-5b266cfab3b6" target="_blank" rel="noopener">here</a>.</p>
+<p>If you have used Laravel before MySQL will be no sweat for you!</p>
+<p>Log into MySQL:</p>
+<pre><code>$ mysql -uroot -p 
+</code></pre><p>Run a SQL command to create the database we will specify in our environment
+file:</p>
+<pre><code>MySQL [(none)]&gt; create database forum;
+Query OK, 1 row affected (0.02 sec)
+</code></pre><p>Close out of MySQL with Ctrl + C.</p>
+<p>Create the file to store variable specific to your computer. This is covered in
+the <strong>.gitignore</strong> file, therefore will not be checked in to git version
+control.</p>
+<pre><code>$ touch .env
+</code></pre><p>Copy and paste in the <strong>.env.example</strong> file to <strong>.env </strong>and edit this part:</p>
+<pre><code>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=forum
+DB_USERNAME=YOUR_USERNAME_HERE
+DB_PASSWORD=YOUR_PASSWORD_HERE
+</code></pre><p>Migrate the database using artisan.</p>
+<pre><code>$ php artisan migrate
+Migration table created successfully.
+Migrating: 2014_10_12_000000_create_users_table
+Migrated: 2014_10_12_000000_create_users_table
+Migrating: 2014_10_12_100000_create_password_resets_table
+Migrated: 2014_10_12_100000_create_password_resets_table
+Migrating: 2017_04_21_224745_create_threads_table
+Migrated: 2017_04_21_224745_create_threads_table
+</code></pre><p>Download <a href="https://www.sequelpro.com/" target="_blank" rel="noopener">Sequel Pro</a> if you do not have it.</p>
+<p><img src="http://i.imgur.com/9clFC7k.png" alt=""></p>
+<p>Connect to the database using their friendly GUI.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*qPadnABxd2f14bgwRseOvg.png" alt="">
+<span class="figcaption_hack">Use Sequel Pro to connect to MySQL in order to easily view database records.</span></p>
+<p>Back in the terminal, make a model, migration and a controller for Reply. We
+went to have replies in our forum. (The -mc flag generates the
+<a href="https://laravel.com/docs/5.4/migrations" target="_blank" rel="noopener">migration</a> and the
+<a href="https://laravel.com/docs/5.4/controllers" target="_blank" rel="noopener">controller</a> for the Reply model.)</p>
+<pre><code>$ php artisan make:model Reply -mc
+</code></pre><p>Update the generated migration file in
+<strong>database/migrations/<timestamp>_create_replies_table.php</timestamp></strong>:</p>
+<pre><code>public function up()
+{
+   Schema::create(‘replies’, function (Blueprint $table) {
+       $table-&gt;increments(‘id’);
+       $table-&gt;integer(‘thread_id’);
+       $table-&gt;integer(‘user_id’);
+       $table-&gt;text(‘body’);
+       $table-&gt;timestamps();
+   });
+}
+</code></pre><p>Run migrations again.</p>
+<pre><code>$ php artisan migrate
+</code></pre><p>In Sequel Pro click the refresh button (it is in bottom left corner)</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*Xu3ITKNx5POtIMnxKnI7Fg.png" alt="">
+<span class="figcaption_hack">Refresh button.</span></p>
+<p>You will see a new Reply table.</p>
+<p>The next part is by far the most complicated… seeding the database.</p>
+<h4 id="Seed-the-Database"><a href="#Seed-the-Database" class="headerlink" title="Seed the Database"></a>Seed the Database</h4><p>Seeding the database means that we are going to generate and pre-populate data
+(such as Threads, Replies and Users) so our application is not empty and we have
+real records to play with.</p>
+<p>We are going to generate mock data for Threads. If you remember, in the
+create_threads migration file we defined threads as having an id, user_id,
+title, body and timestamps.</p>
+<p>We use the <a href="https://github.com/fzaninotto/Faker" target="_blank" rel="noopener">Faker PHP library</a> to generate
+this fake data.</p>
+<p>Head into <strong>database/factories/ModelFactory.php </strong>and add a factory definition
+for creating Threads. The file should look like this:</p>
+<pre><code>$factory-&gt;define(App\User::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        &apos;name&apos; =&gt; $faker-&gt;name,
+        &apos;email&apos; =&gt; $faker-&gt;unique()-&gt;safeEmail,
+        &apos;password&apos; =&gt; $password ?: $password = bcrypt(&apos;secret&apos;),
+        &apos;remember_token&apos; =&gt; str_random(10),
+    ];
+});
+
+$factory-&gt;define(App\Thread::class, function(Faker\Generator $faker){
+   return [
+     &apos;user_id&apos; =&gt; function(){
+        return factory(&apos;App\User&apos;)-&gt;create()-&gt;id;
+     },
+     &apos;title&apos; =&gt; $faker-&gt;sentence,
+     &apos;body&apos; =&gt; $faker-&gt;paragraph
+   ];
+});
+</code></pre><p>In the above snippet is automatically loaded by Laravel. The first part creates
+some Users. In the second part, we define a new factory for creating Threads.
+Faker generates bodies and titles. For the user_id section it creates a new
+user, persists it to the database and then associates the id for that user with
+that Thread.</p>
+<h4 id="Use-php-artisan-tinker-and-factories-to-generate-the-data"><a href="#Use-php-artisan-tinker-and-factories-to-generate-the-data" class="headerlink" title="Use php artisan tinker and factories to generate the data"></a>Use php artisan tinker and factories to generate the data</h4><p>Back at the command line fire up the tinker command. After that we are going to
+make a new factory and create 50 threads with their associated users.</p>
+<pre><code>$ php artisan tinker
+
+Psy Shell v0.8.3 (PHP 5.6.27 — cli) by Justin Hileman
+
+&gt;&gt;&gt; factory(&apos;App\Thread&apos;, 50)-&gt;create();
+
+=&gt; Illuminate\Database\Eloquent\Collection {#688
+
+all: [
+
+App\Thread {#686
+
+user_id: 1,
+
+title: &quot;Mollitia qui quos nesciunt perferendis error quam quo.&quot;,
+
+body: &quot;Laborum rem sit reprehenderit voluptatem. Dolorem magnam possimus quod. Quam omnis architecto doloremque et non reiciendis et. Sit dolorum doloribus quo iure est molestiae at.&quot;,
+
+updated_at: &quot;2017-04-30 22:06:47&quot;,
+
+created_at: &quot;2017-04-30 22:06:47&quot;,
+
+id: 1,
+
+},
+</code></pre><p>Hit refresh on Sequel Pro and you will see our generated records:</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*lQKP_f2W_d7NrfFvTrxQZQ.png" alt="">
+<span class="figcaption_hack">The generated Threads</span></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*pMr86zj094t5YnarnyxELg.png" alt="">
+<span class="figcaption_hack">The generated Users</span></p>
+<p>Now our Threads and Users MySQL tables are full of data for us to use and play
+with! There are 50 random threads that are associated with fake Users.</p>
+<h4 id="Add-Replies-to-the-Threads"><a href="#Add-Replies-to-the-Threads" class="headerlink" title="Add Replies to the Threads"></a>Add Replies to the Threads</h4><p>Create another Factory definition at the bottom of the
+<strong>database/factories/ModelFactory.php</strong> file.</p>
+<pre><code>$factory-&gt;define(App\Reply::class, function(Faker\Generator $faker){
+    return [
+       &apos;thread_id&apos; =&gt; function(){
+           return factory(&apos;App\Thread&apos;)-&gt;create()-&gt;id;
+       },
+       &apos;user_id&apos; =&gt; function(){
+           return factory(&apos;App\User&apos;)-&gt;create()-&gt;id;
+       },
+       &apos;body&apos; =&gt; $faker-&gt;paragraph
+    ];
+});
+</code></pre><p>Refresh the database using Artisan. The below command will delete all of our
+data and run these commands again from scratch.</p>
+<pre><code>$ php artisan migrate:refresh
+
+Rolling back: 2017_04_21_233654_create_replies_table
+
+Rolled back:  2017_04_21_233654_create_replies_table
+
+Rolling back: 2017_04_21_224745_create_threads_table
+
+Rolled back:  2017_04_21_224745_create_threads_table
+
+Rolling back: 2014_10_12_100000_create_password_resets_table
+
+Rolled back:  2014_10_12_100000_create_password_resets_table
+
+Rolling back: 2014_10_12_000000_create_users_table
+
+Rolled back:  2014_10_12_000000_create_users_table
+
+Migrating: 2014_10_12_000000_create_users_table
+
+Migrated:  2014_10_12_000000_create_users_table
+
+Migrating: 2014_10_12_100000_create_password_resets_table
+
+Migrated:  2014_10_12_100000_create_password_resets_table
+
+Migrating: 2017_04_21_224745_create_threads_table
+
+Migrated:  2017_04_21_224745_create_threads_table
+
+Migrating: 2017_04_21_233654_create_replies_table
+
+Migrated:  2017_04_21_233654_create_replies_table
+</code></pre><p>Here are the commands in tinker to generate our data from the Factory we wrote:</p>
+<pre><code>$ php artisan tinker
+
+$threads = factory(&apos;App\Thread&apos;, 50)-&gt;create();
+$threads-&gt;each(function($thread){ factory(&apos;App\Reply&apos;, 10)-&gt;create([ &apos;thread_id&apos; =&gt; $thread-&gt;id ]); });
+</code></pre><p>These commands will recreate our Threads as we did previously and then will
+generate 10 replies to each thread and associate the replies with the thread via
+the thread_id.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*Qadw37OLDf2PFOPdhevTBg.png" alt="">
+<span class="figcaption_hack">Ten Replies for each Thread. Each Reply has a value for thread_id</span></p>
+<h4 id="Further-Reading-on-Database-Seeding"><a href="#Further-Reading-on-Database-Seeding" class="headerlink" title="Further Reading on Database Seeding"></a>Further Reading on Database Seeding</h4><p>Below are some further reading resources on seeding databases and Model
+Factories in Laravel 5.4.</p>
+<p><a href="https://laravel.com/docs/5.4/seeding" target="_blank" rel="noopener">https://laravel.com/docs/5.4/seeding</a></p>
+<p><a href="https://laravel-news.com/learn-to-use-model-factories-in-laravel-5-1" target="_blank" rel="noopener">https://laravel-news.com/learn-to-use-model-factories-in-laravel-5-1</a></p>
+<h4 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h4><p>In this post we have set up the database, viewed in in Sequel Pro and mocked out
+our data using Factories.</p>
+<p>The full video is available <a href="https://laracasts.com/series/lets-build-a-forum-with-laravel/episodes/1" target="_blank" rel="noopener">on Laracasts</a></p>
+<p>Go sign up! Thanks for reading.</p>
+<p><strong>Part 2</strong> for this blog series is <a href="https://medium.com/@connorleech/test-driven-development-tdd-in-laravel-b5a2bf9ab65b" target="_blank" rel="noopener">available on Medium</a></p>
+</div><div id="disqus_thread"></div></article><nav class="pagination"><a href="/blog/launch-github-pages-google-domains/" title="Launch a Website with a Custom URL using Github Pages and Google Domains" class="btn-default entry-pagination__link entry-pagination__link--prev">Prev</a><a href="/blog/Laravel-5.3 Form-Helpers-and-CRUD-Controller-Methods/" title="Laravel 5.3 Form Helpers and CRUD Controller Methods" class="btn-default entry-pagination__link entry-pagination__link--next">Next</a></nav></div></div></div></main><footer class="footer"><div class="container"><div class="row"><div class="col-sm-6"><h4>Connor's Dev Newsletter</h4><p>Very occassional updates. You're free to sign up.</p><ul><li><form action="//herokuapp.us14.list-manage.com/subscribe/post?u=42dd73a709fbadb4a29ef1d0d&amp;amp;id=b77fdad58d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate="" class="validate"><div class="input-group"><input type="email" value="" name="EMAIL" id="mce-EMAIL" placeholder="Enter your email here" class="required email form-control input-lg"><div id="mce-error-response" style="display:none" class="response"></div><div id="mce-success-response" style="display:none" class="response"></div><div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_42dd73a709fbadb4a29ef1d0d_b77fdad58d" tabindex="-1" value=""></div><span class="input-group-btn"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary btn-lg"></span></div></form></li></ul></div><div class="col-sm-2 col-sm-offset-1"><h4>Connect</h4><ul><li> <a target="_blank" href="https://github.com/connor11528">GitHub</a></li><li> <a target="_blank" href="https://www.linkedin.com/in/connorleech">LinkedIn</a></li><li> <a target="_blank" href="https://twitter.com/connor11528">Twitter</a></li><li><a target="_blank" href="https://medium.com/@connorleech">Medium</a></li><li><a target="_blank" href="https://stackoverflow.com/users/2031033/connor-leech">Stackoverflow</a></li><li><a target="_blank" href="https://plus.google.com/u/0/+ConnorLeech">Google+</a></li></ul></div><div class="col-sm-3"><h4>Email</h4><ul><li> <a href="mailto:connorleech@gmail.com">connorleech@gmail.com</a></li></ul></div></div></div></footer><!-- vendor--><script src="/bower_components/jquery/dist/jquery.min.js"></script><script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script><script src="/bower_components/wow/dist/wow.min.js"></script><script src="/bower_components/jquery-easing/jquery.easing.min.js"></script><script src="/bower_components/jquery-color/jquery.color.js"></script><script src="/bower_components/scrollmagic/scrollmagic/minified/ScrollMagic.min.js"></script><script src="/bower_components/scrollmagic/scrollmagic/minified/plugins/debug.addIndicators.min.js"></script><script src="/bower_components/vivus/dist/vivus.min.js"></script><!-- require modules--><script src="/js/require.js"></script><script src="/js/app.js"></script><!-- analytics--><!-- disqus--><script>(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://connorleech.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></body></html>

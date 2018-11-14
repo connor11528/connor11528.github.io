@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#"><head><meta name="generator" content="Hexo 3.8.0"><meta name="author" content="Connor Leech"><title>Building a feature complete bookmarking app with Vue.js, Express and Sequelize ORM</title><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="cleartype" content="on"><meta name="MobileOptimized" content="320"><meta name="HandheldFriendly" content="True"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="description" content="This tutorial walks through building a Node.js, MySQL and front-end framework (Vue.js) application. Client side code is bundled with webpack."><meta name="keywords" content="laravel, aws, javascript, php, developer, software engineer, web development, software, node.js, serverless, lambda, san francisco, bay area, east bay, vue, vuejs, vue.js, vue 2, laravel 5, amazon web services"><meta name="zipcode" content="94501"><meta name="city" content="Alameda"><meta name="state" content="California"><meta name="country" content="United States"><meta name="language" content="EN"><meta property="og:site_name" content="Connor Leech Blog | Javascript and Laravel tutorials"><meta property="og:description" content="Get notified about the latest trends in web development, career growth and cloud infrastructure. I send emails about twice a month covering tutorials in Javascript, Laravel and Cloud"><meta property="og:image" content="http://i0.kym-cdn.com/photos/images/original/001/018/899/936.jpg"><meta property="og:title" content="Building a feature complete bookmarking app with Vue.js, Express and Sequelize ORM"><meta property="og:description" content="This tutorial walks through building a Node.js, MySQL and front-end framework (Vue.js) application. Client side code is bundled with webpack."><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70809574-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-70809574-1');
+</script><!-- Favicon--><link rel="shortcut icon" type="image/png" href="/images/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><!-- Vendor Fonts--><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type="text/css"><link href="/bower_components/animate.css/animate.min.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Yantramanav" rel="stylesheet"><!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries--><!-- WARNING: Respond.js doesn't work if you view the page via file://--><!--if lt IE 9script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+--><link rel="alternate" href="/atom.xml" title="config.title" type="application/rss2.xml"><link rel="stylesheet" href="/css/main.css"></head><body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" class="post"><!-- Nav--><nav role="navigation" class="navbar navbar-custom navbar-fixed-top"><div class="container"><div class="navbar-header"><a href="https://employbl.com/" target="_blank" class="navbar-brand"><img src="/images/employbl_logo.svg" style="height:100px; width:100px;"></a><button type="button" data-toggle="collapse" data-target=".navbar-main-collapse" class="navbar-toggle"><i class="fa fa-bars"></i></button></div><div class="collapse navbar-collapse navbar-left navbar-main-collapse"></div><div class="collapse navbar-collapse navbar-right navbar-main-collapse"><ul class="nav navbar-nav"><li><a href="/blog" class="page-scroll">Blog 🔨</a></li><li><a href="/#about" class="page-scroll">Projects ⚡</a></li></ul></div></div></nav><main id="content"><div id="archive" class="container"><div class="row"> <div class="col-sm-2 col-md-2"><h3>Categories</h3><a href="/blog"><p>All</p></a><a href="/categories/Career"><p>Career</p></a><a href="/categories/Programming"><p>Programming</p></a><a href="/categories/Javascript"><p>Javascript</p></a><a href="/categories/Laravel"><p>Laravel</p></a><a href="/categories/Cloud"><p>Cloud</p></a><a href="/categories/PHP"><p>PHP</p></a></div><div class="col-xs-12 col-md-8"><article class="post"><div class="row"><div class="col-md-10 col-md-offset-1"><h1 class="post-title">Building a feature complete bookmarking app with Vue.js, Express and Sequelize ORM</h1></div></div><div class="row"><div class="post-meta"><h5><span>Connor Leech</span><span class="date"> - Nov 2, 2016&ensp;in<span class="post-categories">&ensp;<a href="/categories/Javascript/" class="post-category">Javascript</a></span></span></h5><a target="_blank" href="http://twitter.com/intent/tweet?status=Building a feature complete bookmarking app with Vue.js, Express and Sequelize ORM by @Connor11528+http://connorleech.info/blog/Building-a-feature-complete-bookmarking-app-with-Vue.js-Express-and-Sequelize-ORM/" class="btn btn-primary social-share twitter"><i class="fa fa-twitter fa-2x"><span class="hidden-xs"></span></i></a><a target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://connorleech.info/blog/Building-a-feature-complete-bookmarking-app-with-Vue.js-Express-and-Sequelize-ORM/&amp;title=Building a feature complete bookmarking app with Vue.js, Express and Sequelize ORM&amp;source=connorleech.info" class="btn btn-primary social-share linkedin"><i class="fa fa-linkedin fa-2x"><span class="hidden-xs"></span></i></a></div></div><div class="post-body"><p><img src="http://i.imgur.com/QSTJPpP.png" alt=""></p>
+<h4 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a><strong>Summary</strong></h4><p>This tutorial walks through building a Node.js, MySQL and front-end framework
+(Vue.js) application. Client side code is bundled with webpack.</p>
+<p><strong>Here is the github link for viewing the application source code:
+</strong><a href="https://github.com/connor11528/sequelize-bookmarks" target="_blank" rel="noopener">https://github.com/connor11528/sequelize-bookmarks</a></p>
+<h4 id="Purpose"><a href="#Purpose" class="headerlink" title="Purpose"></a>Purpose</h4><p>The reason I am writing this is showcase how SQL, Node.js and modern client-side
+Javascript frameworks (Vue.js with Webpack) can all play nicely together. Over
+the course of my development career I have moved from PHP to Ruby to Node.js.
+For all of last year MEAN stack (MongoDB, Express, Angular, Node.js) development
+has been very popular. Now though, Angular 1.x is showing its age. Express is
+still the dominant Node.js web framework, but more robust solutions are being
+built (such as <a href="https://github.com/trailsjs/trails" target="_blank" rel="noopener">Trails.js</a> and
+<a href="http://www.adonisjs.com/" target="_blank" rel="noopener">Adonis.js</a>) that leverage the power of SQL. I thought
+it was about time to understand how to work with a SQL database and Javascript,
+specifically Node.js.</p>
+<h4 id="The-App"><a href="#The-App" class="headerlink" title="The App"></a>The App</h4><p>This application is capable of Creating, Reading, Updating and Deleting (CRUD)
+Authors and Books from a MySQL database. Each Book belongs to an Author and a
+each Author has many books. For a great review of how SQL database associations
+work <a href="http://guides.rubyonrails.org/association_basics.html" target="_blank" rel="noopener">review here</a>.</p>
+<h4 id="The-Stack"><a href="#The-Stack" class="headerlink" title="The Stack"></a>The Stack</h4><p>I followed <a href="https://github.com/johnkariuki" target="_blank" rel="noopener">John Kariuki</a>’s excellent tutorial
+for the backend code. (If you have not seen <a href="https://scotch.io/" target="_blank" rel="noopener">scotch.io
+</a>check it out for great development resources!)</p>
+<p>There was no part 2 for this tutorial series and I was sick of writing
+Angular.js 1.x code. I have played with React.js but quickly became confused as
+to the best way to manage async state across components. I knew Vue.js was
+popular in the <a href="https://laravel.com/" target="_blank" rel="noopener">Laravel</a> community so decided to check it
+out.</p>
+<h4 id="Vue-js"><a href="#Vue-js" class="headerlink" title="Vue.js"></a>Vue.js</h4><p>I quickly new that this was my new front end framework. Vue.js is cleaner and
+easier to reason about than Angular.js 1.x and is easier to learn than React.js.
+It comes with many of the features you expect, and for more complex solutions
+the core team maintains <a href="https://github.com/vuejs/vuex" target="_blank" rel="noopener">Vuex</a>.</p>
+<p>For learning Vue.js I suggest Jeffrey Way’s <a href="https://laracasts.com/series/learning-vue-step-by-step" target="_blank" rel="noopener">Learning Vue 1.0: Step By
+Step</a></p>
+<p>The most difficult part was getting the app setup. I could have split the
+backend API from the frontend into two repositiories (as that is recommended by
+the core team) but whatever YOLO.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*8mHeIgOJ1Li5QCGimqr7mA.gif" alt=""></p>
+<h4 id="Getting-Set-Up"><a href="#Getting-Set-Up" class="headerlink" title="Getting Set Up"></a>Getting Set Up</h4><p>I used the Vue command line tool:
+<a href="https://github.com/vuejs/vue-cli" target="_blank" rel="noopener">https://github.com/vuejs/vue-cli</a></p>
+<p>I highly recommend using <a href="https://github.com/vuejs/vueify" target="_blank" rel="noopener">Vueify</a>. This tool is
+responsible for those funky <strong>.vue</strong> files in the client side directory. This
+allows you to put all the code related to a component in a single file. Each
+file will have it’s own Vue instance which acts like scope in angular. It is
+easy to reason about as it is essentially an object with about four properties.</p>
+<p>For routing: <a href="https://github.com/vuejs/vue-router" target="_blank" rel="noopener">vue-router</a></p>
+<p>For AJAX requests: <a href="https://github.com/yyx990803/vue-resource" target="_blank" rel="noopener">vue-resource</a></p>
+<p>All of these are maintained by the Vue Github organization.</p>
+<p>For some extra awesome typeahead functionality I used
+<a href="https://github.com/yuche/vue-strap" target="_blank" rel="noopener">vue-strap</a>.</p>
+<h4 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h4><p>This app can me deployed to heroku by messing with configuration variables and
+installing some SQL addons. I am not going to do that.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*X4sRREOY3EjwSTuaXM8mSA.gif" alt=""></p>
+<p>If you need a bookmark application use Goodreads! On a brighter note though, the
+<a href="https://github.com/connor11528/sequelize-bookmarks" target="_blank" rel="noopener">source code</a> for this
+application will get you up and running with Vue.js, Sequelize, Node.js and
+Webpack.</p>
+<p>If you have any questions <a href="https://twitter.com/Connor11528" target="_blank" rel="noopener">hit me up on
+Twitter</a>.</p>
+<p>If you enjoyed this breakdown tell your friends to tell their friends.</p>
+<p>Thank you!</p>
+<hr>
+
+<p>Originally published <a href="https://medium.com/@connorleech/building-a-feature-complete-bookmarking-app-with-vue-js-express-and-sequelize-orm-b36506ebcb4c" target="_blank" rel="noopener">on Medium</a></p>
+</div><div id="disqus_thread"></div></article><nav class="pagination"><a href="/blog/Ruby-On-Rails-or-Laravel-which-do-you-use/" title="Ruby On Rails or Laravel, which do you use?" class="btn-default entry-pagination__link entry-pagination__link--prev">Prev</a><a href="/blog/How-to-Install-MySQL-on-Mac-OSX/" title="How to Install MySQL on Mac OSX" class="btn-default entry-pagination__link entry-pagination__link--next">Next</a></nav></div></div></div></main><footer class="footer"><div class="container"><div class="row"><div class="col-sm-6"><h4>Connor's Dev Newsletter</h4><p>Very occassional updates. You're free to sign up.</p><ul><li><form action="//herokuapp.us14.list-manage.com/subscribe/post?u=42dd73a709fbadb4a29ef1d0d&amp;amp;id=b77fdad58d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate="" class="validate"><div class="input-group"><input type="email" value="" name="EMAIL" id="mce-EMAIL" placeholder="Enter your email here" class="required email form-control input-lg"><div id="mce-error-response" style="display:none" class="response"></div><div id="mce-success-response" style="display:none" class="response"></div><div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_42dd73a709fbadb4a29ef1d0d_b77fdad58d" tabindex="-1" value=""></div><span class="input-group-btn"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary btn-lg"></span></div></form></li></ul></div><div class="col-sm-2 col-sm-offset-1"><h4>Connect</h4><ul><li> <a target="_blank" href="https://github.com/connor11528">GitHub</a></li><li> <a target="_blank" href="https://www.linkedin.com/in/connorleech">LinkedIn</a></li><li> <a target="_blank" href="https://twitter.com/connor11528">Twitter</a></li><li><a target="_blank" href="https://medium.com/@connorleech">Medium</a></li><li><a target="_blank" href="https://stackoverflow.com/users/2031033/connor-leech">Stackoverflow</a></li><li><a target="_blank" href="https://plus.google.com/u/0/+ConnorLeech">Google+</a></li></ul></div><div class="col-sm-3"><h4>Email</h4><ul><li> <a href="mailto:connorleech@gmail.com">connorleech@gmail.com</a></li></ul></div></div></div></footer><!-- vendor--><script src="/bower_components/jquery/dist/jquery.min.js"></script><script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script><script src="/bower_components/wow/dist/wow.min.js"></script><script src="/bower_components/jquery-easing/jquery.easing.min.js"></script><script src="/bower_components/jquery-color/jquery.color.js"></script><script src="/bower_components/scrollmagic/scrollmagic/minified/ScrollMagic.min.js"></script><script src="/bower_components/scrollmagic/scrollmagic/minified/plugins/debug.addIndicators.min.js"></script><script src="/bower_components/vivus/dist/vivus.min.js"></script><!-- require modules--><script src="/js/require.js"></script><script src="/js/app.js"></script><!-- analytics--><!-- disqus--><script>(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://connorleech.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></body></html>

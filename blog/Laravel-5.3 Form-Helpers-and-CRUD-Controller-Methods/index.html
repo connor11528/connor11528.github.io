@@ -1,0 +1,349 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#"><head><meta name="generator" content="Hexo 3.8.0"><meta name="author" content="Connor Leech"><title>Laravel 5.3 Form Helpers and CRUD Controller Methods</title><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="cleartype" content="on"><meta name="MobileOptimized" content="320"><meta name="HandheldFriendly" content="True"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="description" content="Post going through how to implement Laravel Collective Forms &amp; HTML helpers within a Laravel 5 app"><meta name="keywords" content="laravel, aws, javascript, php, developer, software engineer, web development, software, node.js, serverless, lambda, san francisco, bay area, east bay, vue, vuejs, vue.js, vue 2, laravel 5, amazon web services"><meta name="zipcode" content="94501"><meta name="city" content="Alameda"><meta name="state" content="California"><meta name="country" content="United States"><meta name="language" content="EN"><meta property="og:site_name" content="Connor Leech Blog | Javascript and Laravel tutorials"><meta property="og:description" content="Get notified about the latest trends in web development, career growth and cloud infrastructure. I send emails about twice a month covering tutorials in Javascript, Laravel and Cloud"><meta property="og:image" content="http://i0.kym-cdn.com/photos/images/original/001/018/899/936.jpg"><meta property="og:title" content="Laravel 5.3 Form Helpers and CRUD Controller Methods"><meta property="og:description" content="Post going through how to implement Laravel Collective Forms &amp; HTML helpers within a Laravel 5 app"><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70809574-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-70809574-1');
+</script><!-- Favicon--><link rel="shortcut icon" type="image/png" href="/images/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><!-- Vendor Fonts--><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type="text/css"><link href="/bower_components/animate.css/animate.min.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Yantramanav" rel="stylesheet"><!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries--><!-- WARNING: Respond.js doesn't work if you view the page via file://--><!--if lt IE 9script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+--><link rel="alternate" href="/atom.xml" title="config.title" type="application/rss2.xml"><link rel="stylesheet" href="/css/main.css"></head><body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" class="post"><!-- Nav--><nav role="navigation" class="navbar navbar-custom navbar-fixed-top"><div class="container"><div class="navbar-header"><a href="https://employbl.com/" target="_blank" class="navbar-brand"><img src="/images/employbl_logo.svg" style="height:100px; width:100px;"></a><button type="button" data-toggle="collapse" data-target=".navbar-main-collapse" class="navbar-toggle"><i class="fa fa-bars"></i></button></div><div class="collapse navbar-collapse navbar-left navbar-main-collapse"></div><div class="collapse navbar-collapse navbar-right navbar-main-collapse"><ul class="nav navbar-nav"><li><a href="/blog" class="page-scroll">Blog 🔨</a></li><li><a href="/#about" class="page-scroll">Projects ⚡</a></li></ul></div></div></nav><main id="content"><div id="archive" class="container"><div class="row"> <div class="col-sm-2 col-md-2"><h3>Categories</h3><a href="/blog"><p>All</p></a><a href="/categories/Career"><p>Career</p></a><a href="/categories/Programming"><p>Programming</p></a><a href="/categories/Javascript"><p>Javascript</p></a><a href="/categories/Laravel"><p>Laravel</p></a><a href="/categories/Cloud"><p>Cloud</p></a><a href="/categories/PHP"><p>PHP</p></a></div><div class="col-xs-12 col-md-8"><article class="post"><div class="row"><div class="col-md-10 col-md-offset-1"><h1 class="post-title">Laravel 5.3 Form Helpers and CRUD Controller Methods</h1></div></div><div class="row"><div class="post-meta"><h5><span>Connor Leech</span><span class="date"> - Jan 8, 2017&ensp;in<span class="post-categories">&ensp;<a href="/categories/Laravel/" class="post-category">Laravel</a></span></span></h5><a target="_blank" href="http://twitter.com/intent/tweet?status=Laravel 5.3 Form Helpers and CRUD Controller Methods by @Connor11528+http://connorleech.info/blog/Laravel-5.3 Form-Helpers-and-CRUD-Controller-Methods/" class="btn btn-primary social-share twitter"><i class="fa fa-twitter fa-2x"><span class="hidden-xs"></span></i></a><a target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://connorleech.info/blog/Laravel-5.3 Form-Helpers-and-CRUD-Controller-Methods/&amp;title=Laravel 5.3 Form Helpers and CRUD Controller Methods&amp;source=connorleech.info" class="btn btn-primary social-share linkedin"><i class="fa fa-linkedin fa-2x"><span class="hidden-xs"></span></i></a></div></div><div class="post-body"><p><img src="https://cdn-images-1.medium.com/max/800/1*QZ8Fkp0LAPd0k9GR0UOaLA.png" alt=""></p>
+<p>In this tutorial we are going to build forms in Laravel for creating and editing
+our data. We will also define all the controller methods required for CRUD
+operations.</p>
+<p>Right now we have out form field in a <strong>home.blade.php file</strong>. We have the
+Candidate controller and model set up in PHP on the server side, now it is time
+to render our markup using Blade Templates.</p>
+<blockquote>
+<p>If you want to follow along the source code is available here:
+<a href="https://github.com/connor11528/laravel-5.3-app" target="_blank" rel="noopener">https://github.com/connor11528/laravel-5.3-app</a>
+(Give it 🌟 on the githubs!)</p>
+</blockquote>
+<blockquote>
+<p>This is the fourth article working on this codebase. We <a href="https://medium.com/@connorleech/generate-authentication-for-a-laravel-5-3-web-app-384781a5529f#.2h2lqj9cd" target="_blank" rel="noopener">added
+authentication</a>,
+made a <a href="https://medium.com/@connorleech/build-google-maps-typeahead-functionality-with-vue-js-and-laravel-5-3-b75986c77df1#.tnmrntx6q" target="_blank" rel="noopener">typeahead Google Maps
+component</a>
+and <a href="https://medium.com/@connorleech/create-a-database-model-and-controller-in-laravel-5-3-b3e15218f6ae#.pe0b5pnif" target="_blank" rel="noopener">set up a model +
+controller</a>
+in the previous articles.</p>
+</blockquote>
+<h3 id="Use-Laravel-5-3-Form-Helpers"><a href="#Use-Laravel-5-3-Form-Helpers" class="headerlink" title="Use Laravel 5.3 Form Helpers"></a>Use Laravel 5.3 Form Helpers</h3><p><a href="https://laravelcollective.com/" target="_blank" rel="noopener">Laravel Collective</a> maintains <a href="https://laravelcollective.com/docs/5.3/html" target="_blank" rel="noopener">Forms &amp; HTML
+helpers</a> that have been removed
+from the core framework but are widely used. It helps us write less code and
+build HTML forms. Install the tool with composer:</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">composer</span> <span class="meta">require</span> <span class="string">"laravelcollective/html"</span>:<span class="string">"^5.3.0"</span></span><br></pre></td></tr></table></figure>
+<p>Next, add your new provider to the  array of <strong>config/app.php</strong>:</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'providers'</span> =&gt; [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    Collective\Html\HtmlServiceProvider::<span class="keyword">class</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  ],</span><br></pre></td></tr></table></figure>
+<p>Finally, add two class aliases to the  array of <strong>config/app.php</strong>:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'aliases'</span> =&gt; [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">      <span class="string">'Form'</span> =&gt; Collective\Html\FormFacade::class,</span><br><span class="line">      <span class="string">'Html'</span> =&gt; Collective\Html\HtmlFacade::class,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  ],</span><br></pre></td></tr></table></figure>
+<h3 id="Create-the-View-Files"><a href="#Create-the-View-Files" class="headerlink" title="Create the View Files"></a>Create the View Files</h3><p>Let’s create generic files for adding, editing and viewing candidates. You can
+create these files manually or use the command line as listed below.</p>
+<pre><code>$ mkdir resources/views/candidates
+$ cd resources/views/candidates
+$ touch create.blade.php edit.blade.php form.blade.php index.blade.php show.blade.php
+</code></pre><p>Our views folder now looks something like this:</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*MK0X84eyzod70HnpaEQjTg.png" alt=""></p>
+<p><span class="figcaption_hack">Create the files. I pimped out my sublime colors thanks to Jeffrey Way’s
+<a href="https://laracasts.com/series/sublime-text-mastery/episodes/1" target="_blank" rel="noopener">Sublime Text Laracast
+episode</a>!</span></p>
+<h3 id="Create-the-Candidate-Controller-methods"><a href="#Create-the-Candidate-Controller-methods" class="headerlink" title="Create the Candidate Controller methods"></a>Create the Candidate Controller methods</h3><p>In the <a href="https://medium.com/@connorleech/create-a-database-model-and-controller-in-laravel-5-3-b3e15218f6ae#.c6d2e9s7p" target="_blank" rel="noopener">last
+post</a>
+we added a candidate using tinker and mocked out our controller methods but did
+not fill them out. Below is our CandidateController endpoints as mocked out by
+Resource Controller. Check out the <a href="https://laravel.com/docs/5.3/eloquent" target="_blank" rel="noopener">Eloquent
+docs</a> and this <a href="https://scotch.io/tutorials/simple-laravel-crud-with-resource-controllers" target="_blank" rel="noopener">Scotch.io
+post</a>
+for more info about CRUD with Resource Controllers.</p>
+<p>Overall we only have to write about 15 lines code. This is enough to Create,
+Update, Show and Edit data and render our html views. Thank you Laravel.</p>
+<p><strong>app/Http/Controllers/CandidateController.php</strong></p>
+<pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Request;
+use App\Candidate;
+
+class CandidateController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * 
+ \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $candidates = Candidate::all();
+
+        return view(&apos;candidates.index&apos;, compact(&apos;candidates&apos;));
+    }
+
+/**
+     * Show the form for creating a new resource.
+     *
+     * 
+ \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view(&apos;candidates.create&apos;);
+    }
+
+/**
+     * Store a newly created resource in storage.
+     *
+     * 
+  \Illuminate\Http\Request  $request
+     * 
+ \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $input = Request::all();
+        Candidate::create($input);
+
+        return redirect(&apos;candidates&apos;);
+    }
+
+/**
+     * Display the specified resource.
+     *
+     * 
+  int  $id
+     * 
+ \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $candidate = Candidate::findOrFail($id);
+
+        return view(&apos;candidates.show&apos;, compact(&apos;candidate&apos;));
+    }
+
+/**
+     * Show the form for editing the specified resource.
+     *
+     * 
+  int  $id
+     * 
+ \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $candidate = Candidate::findOrFail($id);
+
+        return view(&apos;candidates.edit&apos;, compact(&apos;candidate&apos;));
+    }
+
+/**
+     * Update the specified resource in storage.
+     *
+     * 
+  \Illuminate\Http\Request  $request
+     * 
+  int  $id
+     * 
+ \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $candidate = Candidate::findOrFail($id);
+        $input = Request::all();
+        $candidate-&gt;update($input);
+
+        return redirect(&apos;candidates&apos;);
+    }
+
+/**
+     * Remove the specified resource from storage.
+     *
+     * 
+  int  $id
+     * 
+ \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $candidate = Candidate::findOrFail($id);
+        $candidate-&gt;delete();
+
+        return redirect(&apos;candidates.index&apos;);
+    }
+}
+</code></pre><p>Note that at the top of the file we use Request instead of
+Illuminate\Http\Request. This is from these posts on
+<a href="http://stackoverflow.com/questions/28573860/laravel-requestall-should-not-be-called-statically" target="_blank" rel="noopener">Stack</a>
+<a href="http://stackoverflow.com/questions/34675057/undefined-method-in-requestall" target="_blank" rel="noopener">Overflow</a>.
+Redirecting to ‘candidates’ automatically renders the index file in the
+candidates directory.</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*FvbgpP0z_jaNUwp-CUKSBg.jpeg" alt=""></p>
+<p>Thank you Stack Overflow!</p>
+<h3 id="Protect-from-Mass-Assignment-Vulnerabilities-on-the-Model"><a href="#Protect-from-Mass-Assignment-Vulnerabilities-on-the-Model" class="headerlink" title="Protect from Mass Assignment Vulnerabilities on the Model"></a>Protect from Mass Assignment Vulnerabilities on the Model</h3><p>We have to tell Laravel that it is okay for users to edit the fields in our
+database. To do this add a protected field to the model.</p>
+<p><strong>app/Candidate.php</strong></p>
+<pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Candidate extends Model
+{
+    // protect from mass assignment vulnerabilities
+    protected $fillable = [ &apos;name&apos;, &apos;email&apos;, &apos;phone&apos;, &apos;latitude&apos;, &apos;longitude&apos;, &apos;street&apos;, &apos;city&apos;, &apos;state&apos;, &apos;zip&apos;];
+}
+</code></pre><p>If you’re interested to learn more check the <a href="https://laravel.com/docs/5.3/eloquent#mass-assignment" target="_blank" rel="noopener">docs on mass
+assignment</a>.</p>
+<h3 id="Display-Candidate-data-from-the-database-on-the-webpage"><a href="#Display-Candidate-data-from-the-database-on-the-webpage" class="headerlink" title="Display Candidate data from the database on the webpage"></a>Display Candidate data from the database on the webpage</h3><p>Our views inherit from <strong>resources/views/layouts/app.blade.php</strong>. All the
+content will be rendered in the section in that file where the
+<em>@yield(‘content’) </em>line is.</p>
+<p>We want to get the data from the database on to the screen. The candidates index
+file will show a list of all the candidates and the show file will show the data
+for a single candidate. These view will be rendered at
+<a href="http://localhost:8000/candidates" target="_blank" rel="noopener">http://localhost:8000/candidates</a> and
+<a href="http://localhost:8000/candidates/1" target="_blank" rel="noopener">http://localhost:8000/candidates/1</a>.</p>
+<p><strong>resources/views/candidates/index.blade.php</strong></p>
+<pre><code>(&apos;layouts.app&apos;)
+
+(&apos;content&apos;)
+ &lt;h1&gt;Candidates&lt;/h1&gt;
+ &lt;div&gt;
+
+($candidates as $candidate)
+   &lt;h2&gt;
+    &lt;a href=&quot;{{ url('/candidates', $candidate->id) }}&quot;&gt;
+     {{ $candidate->name }}
+    &lt;/a&gt;
+   &lt;/h2&gt;
+   &lt;a href=&quot;{{ route('candidates.edit', $candidate->id) }}&quot;&gt;
+    Edit candidate
+   &lt;/a&gt;
+   &lt;div class=&apos;body&apos;&gt;
+    &lt;pre&gt;{{ $candidate }}&lt;/pre&gt;
+   &lt;/div&gt;
+
+
+   &lt;p&gt;There are no candidates to display!&lt;/p&gt;
+
+ &lt;/div&gt;
+</code></pre><p>The <a href="https://laravel.com/docs/5.3/blade#loops" target="_blank" rel="noopener">@forelse loop</a> is an elegant
+solution in Blade for handling cases when the array of data is empty. The url
+and route methods are different ways of generating links. The <code>&lt;pre&gt;</code> tag is for
+visualizing the javascript object on the page. It is not pretty but it shows the
+data for us developer types.</p>
+<p><img src="https://cdn-images-1.medium.com/max/600/1*G68yPqTC-27usXbqPj-3Rw.jpeg" alt=""></p>
+<p><strong>candidates/show.blade.php</strong></p>
+<pre><code>(&apos;layouts.app&apos;)
+
+(&apos;content&apos;)
+ &lt;h1&gt;{{ $candidate->name }}&lt;/h1&gt;
+
+&lt;div class=&apos;body&apos;&gt;
+  &lt;pre&gt;{{ $candidate }}&lt;/pre&gt;
+ &lt;/div&gt;
+</code></pre><h3 id="Add-Candidates-and-Reusing-Forms"><a href="#Add-Candidates-and-Reusing-Forms" class="headerlink" title="Add Candidates and Reusing Forms"></a>Add Candidates and Reusing Forms</h3><p>You may have noticed that we created a <strong>form.blade.php</strong>. This is a view
+partial that we will call in both the create and edit views.</p>
+<p><strong>resources/views/candidates/create.blade.php</strong></p>
+<pre><code>(&apos;layouts.app&apos;)
+
+(&apos;content&apos;)
+
+&lt;div class=&apos;col-md-6 col-md-offset-3&apos;&gt;
+  &lt;h1&gt;Add New Candidate&lt;/h1&gt;
+
+&lt;hr&gt;
+
+  {!! Form::open([&apos;action&apos; =&gt; &apos;CandidateController@store&apos;]) !!}
+
+(&apos;candidates.form&apos;, [&apos;submitButtonText&apos; =&gt; &apos;Add Candidate&apos;])
+  {!! Form::close() !!}
+ &lt;/div&gt;
+</code></pre><p><strong>resources/views/candidates/edit.blade.php</strong></p>
+<pre><code>(&apos;layouts.app&apos;)
+
+(&apos;content&apos;)
+
+&lt;div class=&apos;col-md-6 col-md-offset-3&apos;&gt;
+  &lt;h1&gt;Edit Candidate&lt;/h1&gt;
+
+&lt;hr&gt;
+
+  {!! Form::model($candidate, [&apos;method&apos; =&gt; &apos;PATCH&apos;, &apos;action&apos; =&gt; [&apos;CandidateController@update&apos;,$candidate-&gt;id]]) !!}
+
+(&apos;candidates.form&apos;, [&apos;submitButtonText&apos; =&gt; &apos;Edit Candidate&apos;])
+  {!! Form::close() !!}
+ &lt;/div&gt;
+</code></pre><p>When we click the create button we’ll get a blank form that goes to the create
+method in the controller. When we go to the edit page the form will be auto
+populated with the current data of the record we are editing. The
+$submitButtonText is defined so the button has the appropriate “create” or
+“edit” terminology. The form itself is defined below.</p>
+<p><strong>resources/views/candidates/form.blade.php</strong></p>
+<pre><code>&lt;div class=&apos;form-group&apos;&gt;
+ {!! Form::label(&apos;name&apos;, &apos;Name:&apos;) !!}
+ {!! Form::text(&apos;name&apos;, null, [&apos;class&apos; =&gt; &apos;form-control&apos;]) !!}
+&lt;/div&gt;
+
+&lt;div class=&apos;form-group&apos;&gt;
+ {!! Form::label(&apos;email&apos;, &apos;Email:&apos;) !!}
+ {!! Form::email(&apos;email&apos;, null, [&apos;class&apos; =&gt; &apos;form-control&apos;]) !!}
+&lt;/div&gt;
+
+&lt;div class=&apos;form-group&apos;&gt;
+ {!! Form::label(&apos;phone&apos;, &apos;Phone:&apos;) !!}
+ {!! Form::text(&apos;phone&apos;, null, [&apos;class&apos; =&gt; &apos;form-control&apos;]) !!}
+&lt;/div&gt;
+
+&lt;div class=&apos;form-group&apos;&gt;
+ {!! Form::label(&apos;latitude&apos;, &apos;Latitude:&apos;) !!}
+ {!! Form::text(&apos;latitude&apos;, null, [&apos;class&apos; =&gt; &apos;form-control&apos;]) !!}
+&lt;/div&gt;
+
+&lt;div class=&apos;form-group&apos;&gt;
+ {!! Form::label(&apos;longitude&apos;, &apos;Longitude:&apos;) !!}
+ {!! Form::text(&apos;longitude&apos;, null, [&apos;class&apos; =&gt; &apos;form-control&apos;]) !!}
+&lt;/div&gt;
+
+&lt;div class=&apos;form-group&apos;&gt;
+ {!! Form::label(&apos;city&apos;, &apos;City:&apos;) !!}
+ {!! Form::text(&apos;city&apos;, null, [&apos;class&apos; =&gt; &apos;form-control&apos;]) !!}
+&lt;/div&gt;
+
+&lt;div class=&apos;form-group&apos;&gt;
+ {!! Form::label(&apos;state&apos;, &apos;State:&apos;) !!}
+ {!! Form::text(&apos;state&apos;, null, [&apos;class&apos; =&gt; &apos;form-control&apos;]) !!}
+&lt;/div&gt;
+
+&lt;div class=&apos;form-group&apos;&gt;
+ {!! Form::label(&apos;zip&apos;, &apos;Zip:&apos;) !!}
+ {!! Form::text(&apos;zip&apos;, null, [&apos;class&apos; =&gt; &apos;form-control&apos;]) !!}
+&lt;/div&gt;
+
+&lt;div class=&apos;form-group&apos;&gt;
+ {!! Form::submit($submitButtonText, [&apos;class&apos; =&gt; &apos;btn btn-lg btn-success form-control&apos;]) !!}
+&lt;/div&gt;
+</code></pre><p>Note here that we are not using our fancy Vue.js typeahead component here.
+Ideally we will have the <strong><location-input></location-input></strong> component handle filling out the
+latitude, longitude, state, address and zip. That component is defined in
+<strong>resources/assets/js/components/LocationInput.vue.</strong></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*AcY-VKyzhRkdG0JSxEryjQ.png" alt=""></p>
+<p>Laravel + Vue.js = Laravue</p>
+<hr>
+<p>I am still figuring out how these Laravel and Vue.js games work. If you have any
+suggestions (especially about using the Vue.js component with Laravel Form
+Builders) let me know.</p>
+<h4 id="The-source-code-is-available-here"><a href="#The-source-code-is-available-here" class="headerlink" title="The source code is available here:"></a>The source code is available here:</h4><p><a href="https://github.com/connor11528/laravel-5.3-app" target="_blank" rel="noopener">https://github.com/connor11528/laravel-5.3-app</a>
+(Give it 🌟 on the githubs!)</p>
+<p>Thank you for reading! I am avail on twitter
+<a href="https://twitter.com/Connor11528" target="_blank" rel="noopener">@connor11528</a>. If you enjoyed post give it a
+recommend. Thanks again</p>
+<hr>
+
+<p>Originally published <a href="https://medium.com/@connorleech/create-and-edit-records-form-reuse-in-laravel-5-3-f70a4b1d5f9b" target="_blank" rel="noopener">on Medium</a></p>
+</div><div id="disqus_thread"></div></article><nav class="pagination"><a href="/blog/Build-an-online-forum-with-Laravel -Initial-Setup-and-Seeding-Part-1/" title="Laravel 5 Initial Database Setup and Seeding" class="btn-default entry-pagination__link entry-pagination__link--prev">Prev</a><a href="/blog/Use-Resource-Controller-Artisan-and-Tinker-to-set-up-REST-API-in-Laravel-5/" title="Use Resource Controller, Artisan and Tinker to set up REST API in Laravel 5.3" class="btn-default entry-pagination__link entry-pagination__link--next">Next</a></nav></div></div></div></main><footer class="footer"><div class="container"><div class="row"><div class="col-sm-6"><h4>Connor's Dev Newsletter</h4><p>Very occassional updates. You're free to sign up.</p><ul><li><form action="//herokuapp.us14.list-manage.com/subscribe/post?u=42dd73a709fbadb4a29ef1d0d&amp;amp;id=b77fdad58d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate="" class="validate"><div class="input-group"><input type="email" value="" name="EMAIL" id="mce-EMAIL" placeholder="Enter your email here" class="required email form-control input-lg"><div id="mce-error-response" style="display:none" class="response"></div><div id="mce-success-response" style="display:none" class="response"></div><div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_42dd73a709fbadb4a29ef1d0d_b77fdad58d" tabindex="-1" value=""></div><span class="input-group-btn"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary btn-lg"></span></div></form></li></ul></div><div class="col-sm-2 col-sm-offset-1"><h4>Connect</h4><ul><li> <a target="_blank" href="https://github.com/connor11528">GitHub</a></li><li> <a target="_blank" href="https://www.linkedin.com/in/connorleech">LinkedIn</a></li><li> <a target="_blank" href="https://twitter.com/connor11528">Twitter</a></li><li><a target="_blank" href="https://medium.com/@connorleech">Medium</a></li><li><a target="_blank" href="https://stackoverflow.com/users/2031033/connor-leech">Stackoverflow</a></li><li><a target="_blank" href="https://plus.google.com/u/0/+ConnorLeech">Google+</a></li></ul></div><div class="col-sm-3"><h4>Email</h4><ul><li> <a href="mailto:connorleech@gmail.com">connorleech@gmail.com</a></li></ul></div></div></div></footer><!-- vendor--><script src="/bower_components/jquery/dist/jquery.min.js"></script><script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script><script src="/bower_components/wow/dist/wow.min.js"></script><script src="/bower_components/jquery-easing/jquery.easing.min.js"></script><script src="/bower_components/jquery-color/jquery.color.js"></script><script src="/bower_components/scrollmagic/scrollmagic/minified/ScrollMagic.min.js"></script><script src="/bower_components/scrollmagic/scrollmagic/minified/plugins/debug.addIndicators.min.js"></script><script src="/bower_components/vivus/dist/vivus.min.js"></script><!-- require modules--><script src="/js/require.js"></script><script src="/js/app.js"></script><!-- analytics--><!-- disqus--><script>(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://connorleech.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></body></html>

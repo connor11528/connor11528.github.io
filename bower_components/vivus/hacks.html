@@ -1,0 +1,18 @@
+<h1 id="Vivus-hacks"><a href="#Vivus-hacks" class="headerlink" title="Vivus hacks"></a>Vivus hacks</h1><p>Some tricks about Vivus are very interesting and might help you but doesn’t have their place in the documentation. So you will see them here.</p>
+<h2 id="Animate-fill-with-CSS"><a href="#Animate-fill-with-CSS" class="headerlink" title="Animate fill with CSS"></a>Animate <code>fill</code> with CSS</h2><p>On inline SVG, it’s very easy to animate fill color with just a bit of CSS.</p>
+<p>Let’s imagine you have an inline SVG element in your page with the ID <code>mySVG</code>. You apply the following CSS to make it with fill opcaity to 0 by default, and a class with the opacity of 1 (with transition). Then once the animation finished, the class can be added to the svg. </p>
+<pre><code class="css"><span class="comment">/* Style */</span>
+<span class="selector-id">#mySVG</span> * {
+  <span class="attribute">fill-opacity</span>: <span class="number">0</span>;
+  <span class="attribute">transition</span>: fill-opacity <span class="number">1s</span>;
+}
+
+<span class="selector-id">#mySVG</span><span class="selector-class">.finished</span> * {
+  <span class="attribute">fill-opacity</span>: <span class="number">1</span>;
+}
+</code></pre>
+<pre><code class="js"><span class="comment">/* JavaScript */</span>
+<span class="keyword">new</span> Vivus(<span class="string">'mySVG'</span>, {}, <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>{
+  obj.el.classList.add(<span class="string">'finished'</span>);
+});
+</code></pre>

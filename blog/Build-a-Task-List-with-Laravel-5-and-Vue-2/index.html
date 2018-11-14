@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#"><head><meta name="generator" content="Hexo 3.8.0"><meta name="author" content="Connor Leech"><title>Build a Task List with Laravel 5.4 and Vue 2</title><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="cleartype" content="on"><meta name="MobileOptimized" content="320"><meta name="HandheldFriendly" content="True"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="description" content="This tutorial goes through building a Laravel 5 Task application. We start from scratch and set up the PHP and MySQL backend. On the frontend we use the popular Vue.js library to add asynchronous UI effects."><meta name="keywords" content="laravel, aws, javascript, php, developer, software engineer, web development, software, node.js, serverless, lambda, san francisco, bay area, east bay, vue, vuejs, vue.js, vue 2, laravel 5, amazon web services"><meta name="zipcode" content="94501"><meta name="city" content="Alameda"><meta name="state" content="California"><meta name="country" content="United States"><meta name="language" content="EN"><meta property="og:site_name" content="Connor Leech Blog | Javascript and Laravel tutorials"><meta property="og:description" content="Get notified about the latest trends in web development, career growth and cloud infrastructure. I send emails about twice a month covering tutorials in Javascript, Laravel and Cloud"><meta property="og:image" content="http://i0.kym-cdn.com/photos/images/original/001/018/899/936.jpg"><meta property="og:title" content="Build a Task List with Laravel 5.4 and Vue 2"><meta property="og:description" content="This tutorial goes through building a Laravel 5 Task application. We start from scratch and set up the PHP and MySQL backend. On the frontend we use the popular Vue.js library to add asynchronous UI effects."><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70809574-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-70809574-1');
+</script><!-- Favicon--><link rel="shortcut icon" type="image/png" href="/images/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><!-- Vendor Fonts--><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type="text/css"><link href="/bower_components/animate.css/animate.min.css" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Yantramanav" rel="stylesheet"><!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries--><!-- WARNING: Respond.js doesn't work if you view the page via file://--><!--if lt IE 9script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+--><link rel="alternate" href="/atom.xml" title="config.title" type="application/rss2.xml"><link rel="stylesheet" href="/css/main.css"></head><body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" class="post"><!-- Nav--><nav role="navigation" class="navbar navbar-custom navbar-fixed-top"><div class="container"><div class="navbar-header"><a href="https://employbl.com/" target="_blank" class="navbar-brand"><img src="/images/employbl_logo.svg" style="height:100px; width:100px;"></a><button type="button" data-toggle="collapse" data-target=".navbar-main-collapse" class="navbar-toggle"><i class="fa fa-bars"></i></button></div><div class="collapse navbar-collapse navbar-left navbar-main-collapse"></div><div class="collapse navbar-collapse navbar-right navbar-main-collapse"><ul class="nav navbar-nav"><li><a href="/blog" class="page-scroll">Blog 🔨</a></li><li><a href="/#about" class="page-scroll">Projects ⚡</a></li></ul></div></div></nav><main id="content"><div id="archive" class="container"><div class="row"> <div class="col-sm-2 col-md-2"><h3>Categories</h3><a href="/blog"><p>All</p></a><a href="/categories/Career"><p>Career</p></a><a href="/categories/Programming"><p>Programming</p></a><a href="/categories/Javascript"><p>Javascript</p></a><a href="/categories/Laravel"><p>Laravel</p></a><a href="/categories/Cloud"><p>Cloud</p></a><a href="/categories/PHP"><p>PHP</p></a></div><div class="col-xs-12 col-md-8"><article class="post"><div class="row"><div class="col-md-10 col-md-offset-1"><h1 class="post-title">Build a Task List with Laravel 5.4 and Vue 2</h1></div></div><div class="row"><div class="post-meta"><h5><span>Connor Leech</span><span class="date"> - Jul 17, 2017&ensp;in<span class="post-categories">&ensp;<a href="/categories/Laravel/" class="post-category">Laravel</a></span></span></h5><a target="_blank" href="http://twitter.com/intent/tweet?status=Build a Task List with Laravel 5.4 and Vue 2 by @Connor11528+http://connorleech.info/blog/Build-a-Task-List-with-Laravel-5-and-Vue-2/" class="btn btn-primary social-share twitter"><i class="fa fa-twitter fa-2x"><span class="hidden-xs"></span></i></a><a target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://connorleech.info/blog/Build-a-Task-List-with-Laravel-5-and-Vue-2/&amp;title=Build a Task List with Laravel 5.4 and Vue 2&amp;source=connorleech.info" class="btn btn-primary social-share linkedin"><i class="fa fa-linkedin fa-2x"><span class="hidden-xs"></span></i></a></div></div><div class="post-body"><p><img src="https://cdn-images-1.medium.com/max/800/1*1cxvzNwx9AaQkh9gYC4bzw.jpeg" alt=""></p>
+<p>We’re going to follow along with
+<a href="https://github.com/felicianopj/laravel-vuejs-tasks" target="_blank" rel="noopener">@felicianopj</a> post that is
+available
+<a href="http://felicianoprochera.com/simple-task-app-with-laravel-5-3-and-vuejs/" target="_blank" rel="noopener">here</a>.</p>
+<h4 id="Create-application"><a href="#Create-application" class="headerlink" title="Create application"></a>Create application</h4><p>I have a short shell script in my Projects folder that I run to create fresh
+Laravel apps (<a href="https://gist.github.com/connor11528/fcfbdb63bc9633a54f40f0a66e3d3f2e" target="_blank" rel="noopener">link to
+gist</a>) ⭐</p>
+<p>So run the script like:</p>
+<pre><code>$ ./create_laravel_app.sh laravel-vue-tasks
+$ cd laravel-vue-tasks
+</code></pre><h4 id="Database-stuff-📊"><a href="#Database-stuff-📊" class="headerlink" title="Database stuff 📊"></a>Database stuff 📊</h4><p>We have a Laravel app and we need to store our tasks in the database.</p>
+<p>This one artisan command creates <strong>the</strong> <strong>model</strong>, <strong>a migration file</strong> and a
+<strong>resource controller</strong>.</p>
+<pre><code>$ php artisan make:model Task -mr
+</code></pre><p>In the model file we need to tell Laravel that the attributes of the database
+are “mass assignable”. To do this and turn off some of Laravel’s security by
+default functionality we set $guarded to an empty array like so:</p>
+<p><strong>app/Task.php</strong></p>
+<pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Task extends Model
+{
+    protected $guarded = [];
+}
+</code></pre><p>Also, create a MySQL database on your local machine. In the following commands
+we’re going to login to MySQL and run a SQL command that creates a database.</p>
+<pre><code>$ mysql -uroot -p
+MySQL [(none)]&gt; create database laravue;
+
+Query OK, 1 row affected (0.04 sec)
+
+MySQL [(none)]&gt; Ctrl-C -- exit!
+</code></pre><p>Our data structure is going to be mad simple. Tasks will have a body of text,
+that’s it. We define this structure in
+<strong>database/<timestamp>_create_tasks_table.php</timestamp></strong>.</p>
+<pre><code>Schema::create(&apos;tasks&apos;, function (Blueprint $table) {
+    $table-&gt;increments(&apos;id&apos;);
+    $table-&gt;longtext(&apos;body&apos;);
+    $table-&gt;timestamps();
+});
+</code></pre><p>In your .env file specify that we want to connect to the database we created.</p>
+<pre><code>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravue
+DB_USERNAME=YOUR_USERNAME_HERE
+DB_PASSWORD=YOUR_PASSWORD_HERE
+</code></pre><p>Migrate the database:</p>
+<pre><code>$ php artisan migrate
+</code></pre><p>If you have issues try clearing the cache using php artisan config:clear before
+the migration command.</p>
+<h4 id="Create-the-API-📡"><a href="#Create-the-API-📡" class="headerlink" title="Create the API 📡"></a>Create the API 📡</h4><p>First we’ll set up routes. Head into <strong>routes/web.php </strong>and we’ll create a route
+group that will have all our CRUD actions for tasks. Add this line:</p>
+<pre><code>Route::get(&apos;/&apos;, function () {
+    return view(&apos;welcome&apos;);
+});
+
+Route::prefix(&apos;api&apos;)-&gt;group(function() {
+    Route::resource(&apos;tasks&apos;, &apos;TaskController&apos;);
+});
+</code></pre><p>To check out the routes available to your application in Laravel you can always
+run: php artisan route:list</p>
+<p>Head to <strong>app/Http/Controllers/TaskController.php</strong> and define our routes. It’s
+worth noting that we are using <strong>route model binding </strong>so a lot of the heavy
+lifting is defined for us. In this instance Laravel takes advantage of
+convention over configuration.</p>
+<pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Task;
+use Illuminate\Http\Request;
+
+class TaskController extends Controller
+{
+    public function index()
+    {
+        return Task::latest()-&gt;get();
+    }
+
+    public function store(Request $request)
+    {
+        $this-&gt;validate($request, [
+            &apos;body&apos; =&gt; &apos;required|max:500&apos;
+        ]);
+
+        return Task::create([ &apos;body&apos; =&gt; request(&apos;body&apos;) ]);
+    }
+
+    public function destroy($id)
+    {
+        $task = Task::findOrFail($id);
+        $task-&gt;delete();
+        return 204;
+    }
+}
+</code></pre><h4 id="Vue-js-and-Making-Things-Look-Pretty-in-the-Browser™️"><a href="#Vue-js-and-Making-Things-Look-Pretty-in-the-Browser™️" class="headerlink" title="Vue.js and Making Things Look Pretty in the Browser™️"></a>Vue.js and Making Things Look Pretty in the Browser™️</h4><p>Open a new terminal window and run</p>
+<pre><code>$ yarn run watch
+</code></pre><p>This will compile our javascript files, watch for changes and re-update them
+anytime we save a file. We now have two terminals going, one with <em>php artisan
+serve</em> and the other with the <em>yarn run watch</em> command. Head over to
+<a href="http://localhost:8000/" target="_blank" rel="noopener">http://localhost:8000/</a> to see the Laravel welcome
+page.</p>
+<p>Our app will load one html file — <strong>resources/views/welcome.blade.php:</strong></p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang=&quot;{{ app()->getLocale() }}&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+
+        &lt;title&gt;Laravel Vue Task App&lt;/title&gt;
+
+        &lt;!-- CSRF Stuff --&gt;
+        &lt;meta name=&quot;csrf-token&quot; content=&quot;{{ csrf_token() }}&quot;&gt;
+        &lt;script&gt;window.Laravel = { csrfToken: &apos;{{ csrf_token() }}&apos; }&lt;/script&gt;
+
+        &lt;!-- Fonts --&gt;
+        &lt;link href=&quot;
+&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
+
+        &lt;!-- Styles --&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;
+&quot; integrity=&quot;sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u&quot; crossorigin=&quot;anonymous&quot;&gt;
+
+   &lt;/head&gt;
+   &lt;body&gt;
+        &lt;div class=&quot;container&quot; id=&apos;app&apos;&gt;
+            &lt;task-list&gt;&lt;/task-list&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Scripts --&gt;
+        &lt;script src=&quot;{{ asset('js/app.js') }}&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>Notice we add a CSRF field so Laravel can validate our requests. We’re also
+using Bootstrap 3 for styling. We load in our javascript and have a component
+called task list. We can define that in
+<strong>resources/assets/js/components/TaskList.vue.</strong></p>
+<p>In the Vue file we’ll do all our Javascripts magic and make HTTP requests using
+axios (comes with Laravel 5.4 by default).</p>
+<pre><code>&lt;template&gt;
+    &lt;div class=&apos;row&apos;&gt;
+        &lt;h1&gt;My Tasks&lt;/h1&gt;
+        &lt;h4&gt;New Task&lt;/h4&gt;
+        &lt;form action=&quot;#&quot; 
+.prevent=&quot;createTask()&quot;&gt;
+            &lt;div class=&quot;input-group&quot;&gt;
+                &lt;input v-model=&quot;task.body&quot; type=&quot;text&quot; name=&quot;body&quot; class=&quot;form-control&quot; autofocus&gt;
+                &lt;span class=&quot;input-group-btn&quot;&gt;
+                    &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot;&gt;New Task&lt;/button&gt;
+                &lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+        &lt;h4&gt;All Tasks&lt;/h4&gt;
+        &lt;ul class=&quot;list-group&quot;&gt;
+            &lt;li v-if=&apos;list.length === 0&apos;&gt;There are no tasks yet!&lt;/li&gt;
+            &lt;li class=&quot;list-group-item&quot; v-for=&quot;(task, index) in list&quot;&gt;
+
+                 {{ task.body }}
+
+                 &lt;button 
+=&quot;deleteTask(task.id)&quot; class=&quot;btn btn-danger btn-xs pull-right&quot;&gt;Delete&lt;/button&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+    export default {
+        data() {
+            return {
+                list: [],
+                task: {
+                    id: &apos;&apos;,
+                    body: &apos;&apos;
+                }
+            };
+        },
+
+        created() {
+            this.fetchTaskList();
+        },
+
+        methods: {
+            fetchTaskList() {
+                axios.get(&apos;api/tasks&apos;).then((res) =&gt; {
+                    this.list = res.data;
+                });
+            },
+
+            createTask() {
+                axios.post(&apos;api/tasks&apos;, this.task)
+                    .then((res) =&gt; {
+                        this.task.body = &apos;&apos;;
+                        this.edit = false;
+                        this.fetchTaskList();
+
+                    })
+                    .catch((err) =&gt; console.error(err));
+            },
+
+            deleteTask(id) {
+                axios.delete(&apos;api/tasks/&apos; + id)
+                    .then((res) =&gt; {
+                        this.fetchTaskList()
+                    })
+                    .catch((err) =&gt; console.error(err));
+            },
+        }
+    }
+&lt;/script&gt;
+&lt;/script&gt;
+</code></pre><p>Load our component into the main Javascript app file. That is located in
+<strong>resources/assets/js/app.js</strong></p>
+<p>Add this line:</p>
+<pre><code>Vue.component(&apos;task-list&apos;, require(&apos;./components/TaskList.vue&apos;));
+</code></pre><p>That’s it! We’re done. The source code is available <a href="https://github.com/connor11528/laravel-vue-tasks" target="_blank" rel="noopener">on
+github</a>.</p>
+<p><img src="https://camo.githubusercontent.com/55dd2b124cfaf8e144982c64a47581d830dc785d/68747470733a2f2f63646e2d696d616765732d312e6d656469756d2e636f6d2f6d61782f3830302f312a4b34716c3534445265416538626775553072545874512e706e67" alt=""></p>
+<hr>
+
+<p>Originally published <a href="https://medium.com/@connorleech/build-a-task-list-with-laravel-5-4-and-vue-2-9be0bba06801" target="_blank" rel="noopener">on Medium</a></p>
+</div><div id="disqus_thread"></div></article><nav class="pagination"><a href="/blog/How-to-Build-Payment-Processing-with-Vuejs-and-Nodejs/" title="How to process payments with Node.js, Vue 2 and Stripe" class="btn-default entry-pagination__link entry-pagination__link--prev">Prev</a><a href="/blog/Testing-Helpers-in-Laravel-5/" title="Testing Helpers in Laravel 5" class="btn-default entry-pagination__link entry-pagination__link--next">Next</a></nav></div></div></div></main><footer class="footer"><div class="container"><div class="row"><div class="col-sm-6"><h4>Connor's Dev Newsletter</h4><p>Very occassional updates. You're free to sign up.</p><ul><li><form action="//herokuapp.us14.list-manage.com/subscribe/post?u=42dd73a709fbadb4a29ef1d0d&amp;amp;id=b77fdad58d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate="" class="validate"><div class="input-group"><input type="email" value="" name="EMAIL" id="mce-EMAIL" placeholder="Enter your email here" class="required email form-control input-lg"><div id="mce-error-response" style="display:none" class="response"></div><div id="mce-success-response" style="display:none" class="response"></div><div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_42dd73a709fbadb4a29ef1d0d_b77fdad58d" tabindex="-1" value=""></div><span class="input-group-btn"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary btn-lg"></span></div></form></li></ul></div><div class="col-sm-2 col-sm-offset-1"><h4>Connect</h4><ul><li> <a target="_blank" href="https://github.com/connor11528">GitHub</a></li><li> <a target="_blank" href="https://www.linkedin.com/in/connorleech">LinkedIn</a></li><li> <a target="_blank" href="https://twitter.com/connor11528">Twitter</a></li><li><a target="_blank" href="https://medium.com/@connorleech">Medium</a></li><li><a target="_blank" href="https://stackoverflow.com/users/2031033/connor-leech">Stackoverflow</a></li><li><a target="_blank" href="https://plus.google.com/u/0/+ConnorLeech">Google+</a></li></ul></div><div class="col-sm-3"><h4>Email</h4><ul><li> <a href="mailto:connorleech@gmail.com">connorleech@gmail.com</a></li></ul></div></div></div></footer><!-- vendor--><script src="/bower_components/jquery/dist/jquery.min.js"></script><script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script><script src="/bower_components/wow/dist/wow.min.js"></script><script src="/bower_components/jquery-easing/jquery.easing.min.js"></script><script src="/bower_components/jquery-color/jquery.color.js"></script><script src="/bower_components/scrollmagic/scrollmagic/minified/ScrollMagic.min.js"></script><script src="/bower_components/scrollmagic/scrollmagic/minified/plugins/debug.addIndicators.min.js"></script><script src="/bower_components/vivus/dist/vivus.min.js"></script><!-- require modules--><script src="/js/require.js"></script><script src="/js/app.js"></script><!-- analytics--><!-- disqus--><script>(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://connorleech.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></body></html>
