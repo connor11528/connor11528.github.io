@@ -9,7 +9,7 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/2-Types-of-Software-Engineering-Interviews/</loc>
+    <loc>https://connorleech.info/blog/5-Steps-in-the-Sales-Process/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -51,6 +51,13 @@
   </url>
   
   <url>
+    <loc>https://connorleech.info/blog/Build-a-javascript-todo-app-with-express-jade-and-mongodb/</loc>
+    
+    <lastmod>2018-11-09T20:20:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://connorleech.info/blog/Build-a-blog-with-the-MEAN-stack-part-1/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
@@ -65,7 +72,7 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/Build-a-javascript-todo-app-with-express-jade-and-mongodb/</loc>
+    <loc>https://connorleech.info/blog/Build-a-shopping-cart-with-vuejs-no-vuex/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -79,13 +86,6 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/Build-a-shopping-cart-with-vuejs-no-vuex/</loc>
-    
-    <lastmod>2018-11-09T20:20:50.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://connorleech.info/blog/Build-a-todo-app-with-angularFire/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
@@ -93,14 +93,14 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/Build-an-online-forum-with-Laravel%E2%80%8A-Initial-Setup-and-Seeding-Part-1/</loc>
+    <loc>https://connorleech.info/blog/Build-push-notifications-into-an-ionic-app/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/Build-push-notifications-into-an-ionic-app/</loc>
+    <loc>https://connorleech.info/blog/Build-an-online-forum-with-Laravel%E2%80%8A-Initial-Setup-and-Seeding-Part-1/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -135,13 +135,6 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/Create-a-custom-blog-theme-with-Hexojs/</loc>
-    
-    <lastmod>2018-11-09T20:20:50.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://connorleech.info/blog/Create-a-comment-list-component-out-of-React-js/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
@@ -149,7 +142,7 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/Create-a-starter-template-for-working-with-django-rest-framework/</loc>
+    <loc>https://connorleech.info/blog/Create-a-custom-blog-theme-with-Hexojs/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -157,6 +150,13 @@
   
   <url>
     <loc>https://connorleech.info/blog/Debugging-and-development-tools-for-Laravel-5/</loc>
+    
+    <lastmod>2018-11-09T20:20:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://connorleech.info/blog/Create-a-starter-template-for-working-with-django-rest-framework/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -233,14 +233,7 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/5-Steps-in-the-Sales-Process/</loc>
-    
-    <lastmod>2018-11-09T20:20:50.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://connorleech.info/blog/Intro-to-React/</loc>
+    <loc>https://connorleech.info/blog/2-Types-of-Software-Engineering-Interviews/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -248,6 +241,13 @@
   
   <url>
     <loc>https://connorleech.info/blog/Intro-to-angular-ui-router/</loc>
+    
+    <lastmod>2018-11-09T20:20:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://connorleech.info/blog/Intro-to-React/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -310,14 +310,14 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/Set-up-drf-to-play-well-with-angular-templates/</loc>
+    <loc>https://connorleech.info/blog/Ruby-On-Rails-or-Laravel-which-do-you-use/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/Ruby-On-Rails-or-Laravel-which-do-you-use/</loc>
+    <loc>https://connorleech.info/blog/Set-up-drf-to-play-well-with-angular-templates/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -338,13 +338,6 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/Use-Resource-Controller-Artisan-and-Tinker-to-set-up-REST-API-in-Laravel-5/</loc>
-    
-    <lastmod>2018-11-09T20:20:50.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://connorleech.info/blog/Tutorial-for-building-a-Web-Application-with-Amazon-S3-Lambda-DynamoDB-and-API-Gateway/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
@@ -352,7 +345,7 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/adonis-presentation-rithm-school/</loc>
+    <loc>https://connorleech.info/blog/Use-Resource-Controller-Artisan-and-Tinker-to-set-up-REST-API-in-Laravel-5/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -366,7 +359,7 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/animate-angular-apps-with-ngFx/</loc>
+    <loc>https://connorleech.info/blog/adonis-presentation-rithm-school/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -380,7 +373,7 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/deploy-django-to-aws/</loc>
+    <loc>https://connorleech.info/blog/animate-angular-apps-with-ngFx/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -394,7 +387,21 @@
   </url>
   
   <url>
+    <loc>https://connorleech.info/blog/deploy-django-to-aws/</loc>
+    
+    <lastmod>2018-11-09T20:20:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://connorleech.info/blog/email-verification-in-a-laravel-5-app/</loc>
+    
+    <lastmod>2018-11-09T20:20:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://connorleech.info/blog/facebook-auth-with-ionic-and-firebase/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -415,7 +422,7 @@
   </url>
   
   <url>
-    <loc>https://connorleech.info/blog/facebook-auth-with-ionic-and-firebase/</loc>
+    <loc>https://connorleech.info/blog/ssl-https-heroku-google-domains/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     
@@ -423,13 +430,6 @@
   
   <url>
     <loc>https://connorleech.info/blog/log-in-with-twitter-from-client-with-angular-and-oauth-io/</loc>
-    
-    <lastmod>2018-11-09T20:20:50.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://connorleech.info/blog/ssl-https-heroku-google-domains/</loc>
     
     <lastmod>2018-11-09T20:20:50.000Z</lastmod>
     

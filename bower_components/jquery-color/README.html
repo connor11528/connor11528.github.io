@@ -26,9 +26,9 @@
 <span class="tag">&lt;<span class="name">head</span>&gt;</span>
   <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span>
 <span class="undefined">div {</span>
-<span class="undefined">background-color:#bada55;</span>
-<span class="undefined">width:100px;</span>
-<span class="undefined">border:1px solid green;</span>
+<span class="css"><span class="selector-tag">background-color</span>:<span class="selector-id">#bada55</span>;</span>
+<span class="css"><span class="selector-tag">width</span><span class="selector-pseudo">:100px</span>;</span>
+<span class="css"><span class="selector-tag">border</span><span class="selector-pseudo">:1px</span> <span class="selector-tag">solid</span> <span class="selector-tag">green</span>;</span>
 <span class="undefined">}</span>
 <span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span>
 <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://code.jquery.com/jquery-1.6.1.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>
@@ -39,13 +39,13 @@
 <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"sat"</span>&gt;</span>Desaturate<span class="tag">&lt;/<span class="name">button</span>&gt;</span>
   <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"block"</span>&gt;</span>Hello!<span class="tag">&lt;/<span class="name">div</span>&gt;</span>
 <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span>
-<span class="javascript">jQuery(<span class="string">"#go"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span>
-<span class="javascript">  jQuery(<span class="string">"#block"</span>).animate({</span>
-<span class="javascript">      backgroundColor: <span class="string">"#abcdef"</span></span>
+<span class="actionscript">jQuery(<span class="string">"#go"</span>).click(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</span>
+<span class="actionscript">  jQuery(<span class="string">"#block"</span>).animate({</span>
+<span class="actionscript">      backgroundColor: <span class="string">"#abcdef"</span></span>
 <span class="undefined">  }, 1500 );</span>
 <span class="undefined">});</span>
-<span class="javascript">jQuery(<span class="string">"#sat"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span>
-<span class="javascript">  jQuery(<span class="string">"#block"</span>).animate({</span>
+<span class="actionscript">jQuery(<span class="string">"#sat"</span>).click(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</span>
+<span class="actionscript">  jQuery(<span class="string">"#block"</span>).animate({</span>
 <span class="undefined">      backgroundColor: jQuery.Color({ saturation: 0 })</span>
 <span class="undefined">  }, 1500 );</span>
 <span class="undefined">});</span>

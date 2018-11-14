@@ -38,21 +38,21 @@
 <span class="tag">&lt;/<span class="name">svg</span>&gt;</span>
 
 <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span>
-<span class="javascript">  <span class="keyword">new</span> Vivus(<span class="string">'my-svg'</span>, {<span class="attr">duration</span>: <span class="number">200</span>}, myCallback);</span>
+<span class="actionscript">  <span class="keyword">new</span> Vivus(<span class="string">'my-svg'</span>, {duration: <span class="number">200</span>}, myCallback);</span>
 <span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>
 </code></pre>
 <p><strong>Dynamic load</strong></p>
 <pre><code class="html"><span class="tag">&lt;<span class="name">object</span> <span class="attr">id</span>=<span class="string">"my-svg"</span> <span class="attr">type</span>=<span class="string">"image/svg+xml"</span> <span class="attr">data</span>=<span class="string">"link/to/my.svg"</span>&gt;</span><span class="tag">&lt;/<span class="name">object</span>&gt;</span>
 
 <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span>
-<span class="javascript">  <span class="keyword">new</span> Vivus(<span class="string">'my-svg'</span>, {<span class="attr">duration</span>: <span class="number">200</span>}, myCallback);</span>
+<span class="actionscript">  <span class="keyword">new</span> Vivus(<span class="string">'my-svg'</span>, {duration: <span class="number">200</span>}, myCallback);</span>
 <span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>
 </code></pre>
 <p>or</p>
 <pre><code class="html"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"my-div"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
 
 <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span>
-<span class="javascript">  <span class="keyword">new</span> Vivus(<span class="string">'my-div'</span>, {<span class="attr">duration</span>: <span class="number">200</span>, <span class="attr">file</span>: <span class="string">'link/to/my.svg'</span>}, myCallback);</span>
+<span class="actionscript">  <span class="keyword">new</span> Vivus(<span class="string">'my-div'</span>, {duration: <span class="number">200</span>, file: <span class="string">'link/to/my.svg'</span>}, myCallback);</span>
 <span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>
 </code></pre>
 <p>By default the <code>object</code> created will take the size of the parent element, this one must have a height and width or your SVG might not appear.</p>
